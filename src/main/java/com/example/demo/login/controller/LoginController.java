@@ -1,4 +1,4 @@
-package com.example.demo.login;
+package com.example.demo.login.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +10,7 @@ public class LoginController {
 
 	@GetMapping("/login")
 	public String getLogin(Model model) {
+
 		return "login/login";
 	}
 
