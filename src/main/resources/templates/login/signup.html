@@ -12,33 +12,44 @@
 	<div class="page-header">
 		<h1>ユーザー登録画面</h1>
 	</div>
-	<form th:action="@{/signup}" method="post">
+	<form th:action="@{/signup}" method="post" th:object="${signupForm}">
 		<table class="table table-bordered table-hover">
 		<tr>
 			<th>ユーザーID</th>
 			<td>
-				<div class="form-group">
-					<input type="text" class="form-control">
+				<div class="form-group" th:classappend="${#fields.hasErrors('userId')}?'has-error'">
+					<input type="text" class="form-control" th:field="*{userId}">
+					<span class="text-danger" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}">
+					userId error</span>
 				</div>
 			</td>
 		</tr>
 		<tr>
 			<th>パスワード</th>
 			<td>
-				<div class="form-group">
-					<input type="text" class="form-control">
+				<div class="form-group" th:classappend="${#fields.hasErrors('password')}?'has-error'">
+					<input type="text" class="form-control" th:field="*{password}">
+					<span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+					password error</span>
 				</div>
 			</td>
 		</tr>
 		<tr>
 			<th>ユーザー名</th>
 			<td>
-				<div class="form-group">
-					<input type="text" class="form-control">
+				<div class="form-group" th:classappend="${#fields.hasErrors('userName')}?'has-error'">
+					<input type="text" class="form-control" th:field="*{userName}">
+					<span class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">
+					userName error</span>
 				</div>
 			</td>
 		</tr>
 		</table>
+		<ul>
+			<li th:each="error:${#fields.detailedErrors()}">
+				<span th:text="${error.message}">Error Message</span>
+			</li>
+		</ul>
 		<button class="btn btn-primary" type="submit">ユーザー登録</button>
 	</form>
 </div>
