@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymelead.org">
+<head>
+<meta charset="UTF-8">
+<link th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}" rel="stylesheet"></link>
+	<script th:src="@{/webjars/jquery/2.2.4/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+<title>Sign up</title>
+</head>
+<body>
+<div class="col-sm-5">
+	<div class="page-header">
+		<h1>ユーザー登録画面</h1>
+	</div>
+	<form th:action="@{/signup}" method="post">
+		<table class="table table-bordered table-hover">
+		<tr>
+			<th>ユーザーID</th>
+			<td>
+				<div class="form-group">
+					<input type="text" class="form-control">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>パスワード</th>
+			<td>
+				<div class="form-group">
+					<input type="text" class="form-control">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>ユーザー名</th>
+			<td>
+				<div class="form-group">
+					<input type="text" class="form-control">
+				</div>
+			</td>
+		</tr>
+		</table>
+		<button class="btn btn-primary" type="submit">ユーザー登録</button>
+	</form>
+</div>
+</body>
+</html>

@@ -5,12 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class LoginController {
+public class SignupController {
 
-	@GetMapping("/login")
-	public String getLogin(Model model) {
+	@GetMapping("/signup")
+	public String getSignup(Model model) {
 
-		return "login/login";
+		return "login/signup";
 	}
-
 }
