@@ -33,6 +33,9 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation 'org.springframework.security:spring-security-test'
+	compile('org.webjars:jquery:2.2.4')
+	compile('org.webjars:bootstrap:4.4.1')
+	testCompile('org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.1.2')
 }
 
 test {
