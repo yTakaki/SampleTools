@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper>
+<mapper namespace="com.example.demo.login.domain.repository.mybatis.UserMapper">
 
 	<resultMap type="com.example.demo.login.domain.model.User" id="user">
 		<id column="user_id" property="userId"></id>
@@ -20,7 +20,7 @@
 	WHERE user_id = #{userId}
 	</select>
 
-	<select id="selectAllUser" resultType="user">
+	<select id="selectAllUser" resultMap="user">
 	SELECT user_id,password,user_name
 	FROM login_user
 	</select>

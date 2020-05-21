@@ -38,8 +38,8 @@ public class SignupController {
 		user.setPassword(form.getPassword());
 		user.setUserName(form.getUserName());
 		boolean result = userMapper.insertUser(user);
-
-		System.out.println(result);
+		if (result) { System.out.println("insert success"); }
+		else { System.out.println("insert failure"); }
 
 		return "redirect:/login";
 	}
