@@ -17,24 +17,30 @@
 		<tr>
 			<th>ユーザーID</th>
 			<td>
-				<div class="form-group">
+				<div class="form-group" th:classappend="${#fields.hasErrors('userId')}?'has-error'">
 					<input type="text" class="form-control" th:field="*{userId}">
+					<span class="text-danger" th:if="${#fields.hasErrors('userId')}" th:text="*{userId}">
+					userId error</span>
 				</div>
 			</td>
 		</tr>
 		<tr>
 			<th>パスワード</th>
 			<td>
-				<div class="form-group">
+				<div class="form-group" th:classappend="${#fields.hasErrors('password')}?'has-error'">
 					<input type="text" class="form-control" th:field="*{password}">
+					<span class="text-danger" th:if="${#fields.hasErrors('password')}" th:text="*{password}">
+					password error</span>
 				</div>
 			</td>
 		</tr>
 		<tr>
 			<th>ユーザー名</th>
 			<td>
-				<div class="form-group">
+				<div class="form-group" th:classappend="${#fields.hasErrors('userName')}?'has-error'">
 					<input type="text" class="form-control" th:field="*{userName}">
+					<span class="text-danger" th:if="${#fields.hasErrors('userName')}" th:text="*{userName}">
+					userName error</span>
 				</div>
 			</td>
 		</tr>
