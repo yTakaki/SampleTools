@@ -14,7 +14,7 @@
 	VALUES (#{userId},#{password},#{userName})
 	</insert>
 
-	<select id="selectOneUser" parameterType="string" resultType="com.example.demo.login.domain.model.User">
+	<select id="selectOneUser" parameterType="string" resultMap="user">
 	SELECT user_id,password,user_name
 	FROM login_user
 	WHERE user_id = #{userId}
