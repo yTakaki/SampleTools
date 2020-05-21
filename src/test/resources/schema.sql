@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS login_user (
+	user_id VARCHAR(50) PRIMARY KEY,
+	password VARCHAR(16) NOT NULL,
+	user_name VARCHAR(20) NOT NULL
+);
