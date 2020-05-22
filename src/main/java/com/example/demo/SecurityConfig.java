@@ -21,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/css/**").permitAll()
 		.antMatchers("/login").permitAll()
 		.antMatchers("/signup").permitAll()
+		.antMatchers("/**").permitAll() // ログイン実装までの許可
 		.anyRequest().authenticated();
 
 		http.csrf().disable(); // 一時的に無効
