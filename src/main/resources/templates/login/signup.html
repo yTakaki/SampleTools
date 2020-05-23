@@ -11,7 +11,9 @@
 <div class="col-sm-5">
 	<div class="page-header">
 		<h1>ユーザー登録画面</h1>
+		<a th:href="@{/login}">ログイン画面に戻る</a>
 	</div>
+	<br>
 	<form th:action="@{/signup}" method="post" th:object="${signupForm}">
 		<table class="table table-bordered table-hover">
 		<tr>
