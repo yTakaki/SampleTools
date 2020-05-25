@@ -35,14 +35,16 @@ public class UserMasterController {
 		List<User> userList = new ArrayList<>();
 		if (form.getUserId()==null && form.getUserName()==null) {
 			userList = service.selectAllUser();
-		} else if (form.getUserId()==null) {
+		} else if (form.getUserId()==null && form.getUserName()!=null) {
 			userList = service.searchUserId(form.getUserId());
-		} else if (form.getUserName()==null) {
+		} else if (form.getUserId()!=null && form.getUserName()==null) {
 			userList = service.searchUserName(form.getUserName());
 		} else {
 			userList = service.searchUser(form.getUserId(), form.getUserName());
 		}
 		model.addAttribute("userList", userList);
-		return "redirect:/userMaster";
+		model.addAttribute("result", "合計で"+userList.size()+"件のユーザー情報を取得しました。");
+		model.addAttribute("contents", "manage/userMaster :: userMaster_contents");
+		return "login/homeLayout";
 	}
 }
