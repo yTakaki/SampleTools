@@ -3,6 +3,8 @@ package com.example.demo.login.domain.repository.mybatis;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,7 @@ public class UserMapperTest {
 			user.setPassword("password");
 			user.setUserName("testuser");
 			// execute
+			mapper.deleteUser("testdata@sample.com");
 			mapper.insertUser(user);
 			User actual = jdbc.queryForObject("SELECT * FROM login_user WHERE user_id = :user_id",
 					new MapSqlParameterSource("user_id",user.getUserId()),
@@ -46,23 +49,45 @@ public class UserMapperTest {
 
 
 	@Test
-	@Sql(statements="INSERT INTO login_user VALUES ('testdata','pass','testuser')")
+	@Sql(statements= {
+			"DELETE FROM login_user",
+			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
+	})
 	void selectOneUserTest() throws Exception {
 		{
 			// setup
-			String id = "testdata";
+			String id = "testdata@sample.com";
 			// execution
 			User actual = mapper.selectOneUser(id);
 			// assertion
-			assertThat(actual.getUserId(),is("testdata"));
+			assertThat(actual.getUserId(),is("testdata@sample.com"));
 			assertThat(actual.getPassword(),is("pass"));
 			assertThat(actual.getUserName(),is("testuser"));
 		}
 	}
 
+	@Test
+	@Sql(statements= {
+			"DELETE FROM login_user",
+			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
+	})
+	void selectAllUserTest() throws Exception {
+		{
+			// execution
+			List<User> actual = mapper.selectAllUser();
+			// assertion
+			assertThat(actual.size(),is(1));
+			assertThat(actual.get(0).getUserId(),is("testdata@sample.com"));
+			assertThat(actual.get(0).getPassword(),is("pass"));
+			assertThat(actual.get(0).getUserName(),is("testuser"));
+		}
+	}
 
 	@Test
-	@Sql(statements="INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')")
+	@Sql(statements= {
+			"DELETE FROM login_user",
+			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
+	})
 	void updateUserTest() throws Exception {
 		{
 			// setup
@@ -81,8 +106,10 @@ public class UserMapperTest {
 	}
 
 	@Test
-	@Sql(statements="INSERT INTO login_user(user_id,password,user_name)"
-			+ " VALUES ('testdata@sample.com','pass','testuser')")
+	@Sql(statements= {
+			"DELETE FROM login_user",
+			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
+	})
 	void deleteUserTest() throws Exception {
 		{
 			// setup
@@ -92,6 +119,23 @@ public class UserMapperTest {
 			// assertion
 			assertThat(actual,is(true));
 			assertThat(mapper.selectOneUser(id),is(nullValue()));
+		}
+	}
+
+	@Test
+	@Sql(statements={
+			"DELETE FROM login_user",
+			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
+	})
+	void searchUserTest() throws Exception {
+		{
+			String userId = "test";
+			String userName = "test";
+			List<User> actual = mapper.searchUser(userId,userName);
+			assertThat(actual.size(),is(1));
+			assertThat(actual.get(0).getUserId(),is("testdata@sample.com"));
+			assertThat(actual.get(0).getPassword(),is("pass"));
+			assertThat(actual.get(0).getUserName(),is("testuser"));
 		}
 	}
 

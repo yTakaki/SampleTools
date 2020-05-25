@@ -16,8 +16,30 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 			<input type="text">
 			<br>
 			<button class="btn btn-primary" type="submit">検索</button>
-			<a class="btn btn-link pull-right" th:href="@{/userMaster}">クリア</a>
 			</form>
+		</div>
+		<label class="text-info" th:text="result">結果表示</label>
+		<br>
+		<div class="containar-fluid">
+			<div class="row">
+				<table class="table table-bordered table-hover table-striped">
+				<tr>
+					<th>ユーザーID</th>
+					<th>ユーザー名</th>
+					<th></th>
+				</tr>
+				<tr th:each="user:${userList}">
+					<td th:text="${user.userId}"></td>
+					<td th:text="${user.userName}"></td>
+					<td>
+						<div class="btn btn-vertical">
+						<a class="btn btn-primary btn-sm" th:href="@{'/updateUser/'+${user.userId}}">編集</a>
+						<a class="btn btn-danger btn-sm" th:href="@{'/deleteUser/'+${user.userId}}">削除</a>
+						</div>
+					</td>
+				</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 </body>

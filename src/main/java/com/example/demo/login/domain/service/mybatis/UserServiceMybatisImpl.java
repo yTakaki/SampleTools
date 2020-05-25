@@ -41,4 +41,8 @@ public class UserServiceMybatisImpl implements UserService {
 	public boolean deleteUser(String userId) {
 		return userMapper.deleteUser(userId);
 	}
+
+	public List<User> searchUser(String userId,String userName) {
+		return userMapper.searchUser(userId,userName);
+	}
 }

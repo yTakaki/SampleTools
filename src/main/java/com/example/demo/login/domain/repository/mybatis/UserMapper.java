@@ -3,6 +3,7 @@ package com.example.demo.login.domain.repository.mybatis;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.example.demo.login.domain.model.User;
 
@@ -18,5 +19,7 @@ public interface UserMapper {
 	public boolean updateUser(User user);
 
 	public boolean deleteUser(String userId);
+
+	public List<User> searchUser(@Param("userId")String userId,@Param("userName")String userName);
 
 }
