@@ -43,4 +43,16 @@
 	AND user_name LIKE CONCAT('%',#{userName},'%')
 	</select>
 
+	<select id="searchUserId" parameterType="string" resultMap="user">
+	SELECT user_id,password,user_name
+	FROM login_user
+	WHERE user_id LIKE CONCAT('%',#{userId},'%')
+	</select>
+
+	<select id="searchUserName" parameterType="string" resultMap="user">
+	SELECT user_id,password,user_name
+	FROM login_user
+	WHERE user_name LIKE CONCAT('%',#{userName},'%')
+	</select>
+
 </mapper>

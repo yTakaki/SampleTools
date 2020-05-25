@@ -22,4 +22,8 @@ public interface UserMapper {
 
 	public List<User> searchUser(@Param("userId")String userId,@Param("userName")String userName);
 
+	public List<User> searchUserId(String userId);
+
+	public List<User> searchUserName(String userName);
+
 }

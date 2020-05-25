@@ -16,4 +16,10 @@ public interface UserService {
 
 	public boolean deleteUser(String userId);
 
+	public List<User> searchUser(String userId,String userName);
+
+	public List<User> searchUserId(String userId);
+
+	public List<User> searchUserName(String userName);
+
 }

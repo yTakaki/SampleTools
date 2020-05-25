@@ -42,7 +42,18 @@ public class UserServiceMybatisImpl implements UserService {
 		return userMapper.deleteUser(userId);
 	}
 
+	@Override
 	public List<User> searchUser(String userId,String userName) {
 		return userMapper.searchUser(userId,userName);
+	}
+
+	@Override
+	public List<User> searchUserId(String userId) {
+		return userMapper.searchUserId(userId);
+	}
+
+	@Override
+	public List<User> searchUserName(String userName) {
+		return userMapper.searchUserName(userName);
 	}
 }

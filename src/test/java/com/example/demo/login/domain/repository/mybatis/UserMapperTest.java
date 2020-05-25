@@ -139,4 +139,36 @@ public class UserMapperTest {
 		}
 	}
 
+	@Test
+	@Sql(statements={
+			"DELETE FROM login_user",
+			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
+	})
+	void searchUserIdTest() throws Exception {
+		{
+			String userId = "test";
+			List<User> actual = mapper.searchUserId(userId);
+			assertThat(actual.size(),is(1));
+			assertThat(actual.get(0).getUserId(),is("testdata@sample.com"));
+			assertThat(actual.get(0).getPassword(),is("pass"));
+			assertThat(actual.get(0).getUserName(),is("testuser"));
+		}
+	}
+
+	@Test
+	@Sql(statements={
+			"DELETE FROM login_user",
+			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
+	})
+	void searchUserNameTest() throws Exception {
+		{
+			String userName = "test";
+			List<User> actual = mapper.searchUserName(userName);
+			assertThat(actual.size(),is(1));
+			assertThat(actual.get(0).getUserId(),is("testdata@sample.com"));
+			assertThat(actual.get(0).getPassword(),is("pass"));
+			assertThat(actual.get(0).getUserName(),is("testuser"));
+		}
+	}
+
 }
