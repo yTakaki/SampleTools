@@ -16,9 +16,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 			<input type="text">
 			<br>
 			<button class="btn btn-primary" type="submit">検索</button>
+			<a class="btn btn-secondary" th:href="@{/userMaster}">クリア</a>
 			</form>
 		</div>
-		<label class="text-info" th:text="result">結果表示</label>
+		<label class="text-info" th:text="${result}">結果表示</label>
 		<br>
 		<div class="containar-fluid">
 			<div class="row">
