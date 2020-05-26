@@ -34,8 +34,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					<td th:text="${user.userName}"></td>
 					<td>
 						<div class="btn btn-vertical">
+						<form method="post" th:action="@{'/deleteUser/'+${user.userId}}">
 						<a class="btn btn-primary btn-sm" th:href="@{'/updateUser/'+${user.userId}}">編集</a>
-						<form method="post" th:action="@{'/deleteUser'+${user.userId}}">
 						<button class="btn btn-danger btn-sm" type="submit">削除</button>
 						</form>
 						</div>
