@@ -78,25 +78,25 @@ public class UserMasterController {
 		boolean result = service.updateUser(user);
 		if (result==true) {
 			System.out.println("update success.");
-			model.addAttribute("result","ユーザー名("+form.getUserName()+")を更新しました。");
+			model.addAttribute("result","ユーザー情報を1件更新しました。");
 		} else {
 			System.out.println("update failure.");
-			model.addAttribute("result","ユーザー名("+form.getUserName()+")の更新に失敗しました。");
+			model.addAttribute("result","ユーザー情報の更新に失敗しました。");
 		}
 		return "login/homeLayout";
 	}
 
-	@GetMapping("/deleteUser/{id:.+}")
-	public String getDeleteUser(Model model,@PathVariable("id") String userId) {
+	@PostMapping("/deleteUser/{id:.+}")
+	public String postDeleteUser(Model model,@PathVariable("id") String userId) {
 		System.out.println("userId="+userId);
 		model.addAttribute("contents","manage/userMaster :: userMaster_contents");
 		boolean result = service.deleteUser(userId);
 		if (result==true) {
 			System.out.println("delete success.");
-			model.addAttribute("result","ユーザーID("+userId+")を更新しました。");
+			model.addAttribute("result","ユーザー情報を1件削除しました。");
 		} else {
 			System.out.println("delete failure.");
-			model.addAttribute("result","ユーザーID("+userId+")の更新に失敗しました。");
+			model.addAttribute("result","ユーザー情報の削除に失敗しました。");
 		}
 		return "login/homeLayout";
 	}
