@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.mybatis.UserMapper;
-import com.example.demo.login.domain.service.UserService;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -25,9 +24,6 @@ public class UserMasterControllerTest {
 
 	@Autowired
 	private MockMvc mock;
-
-	@Autowired
-	private UserService service;
 
 	@Autowired
 	private UserMapper mapper;
@@ -39,7 +35,7 @@ public class UserMasterControllerTest {
 		user.setPassword("pass");
 		user.setUserName("testuser");
 		mapper.deleteAllUser();
-		service.insertUser(user);
+		mapper.insertUser(user);
 	}
 
 	@Test
