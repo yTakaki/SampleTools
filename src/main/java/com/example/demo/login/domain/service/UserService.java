@@ -21,5 +21,4 @@ public interface UserService {
 	public List<User> searchUserId(String userId);
 
 	public List<User> searchUserName(String userName);
-
 }

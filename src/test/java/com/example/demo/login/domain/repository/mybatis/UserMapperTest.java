@@ -171,4 +171,11 @@ public class UserMapperTest {
 		}
 	}
 
+	@Test
+	void deleteAllUserTest() throws Exception {
+		Boolean actual = mapper.deleteAllUser();
+		assertThat(actual,is(true));
+		assertThat(mapper.selectAllUser().size(),is(0));
+	}
+
 }

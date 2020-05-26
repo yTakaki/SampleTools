@@ -26,4 +26,6 @@ public interface UserMapper {
 
 	public List<User> searchUserName(String userName);
 
+	public boolean deleteAllUser(); // for junit test.
+
 }

@@ -55,4 +55,8 @@
 	WHERE user_name LIKE CONCAT('%',#{userName},'%')
 	</select>
 
+	<delete id="deleteAllUser">
+	DELETE FROM login_user
+	</delete>
+
 </mapper>
