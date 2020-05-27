@@ -28,6 +28,13 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					</div>
 				</div>
 				<div class="form-group row">
+					<label class="col-sm-2 col-form-label text-right">食品フラグ</label>
+					<div th:each="flg:${radioFoodFlag}" class="form-check-inline">
+						<input type="radio" name="radioFoodFlag" th:text="${flg.key}"
+						 th:value="${flg.value}" th:field="*{foodFlag}" class="form-check-input">
+					</div>
+				</div>
+				<div class="form-group row">
 					<label class="col-sm-2 col-form-label text-right">取扱状態</label>
 					<div th:each="status:${radioComponentStatus}" class="form-check-inline">
 						<input type="radio" name="radioComponentStatus" th:text="${status.key}"

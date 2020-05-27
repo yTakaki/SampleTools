@@ -11,5 +11,7 @@ public class ComponentSearchForm {
 
 	private String componentName;
 
+	private boolean foodFlag;
+
 	private int componentStatus;
 }

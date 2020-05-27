@@ -13,7 +13,15 @@ import com.example.demo.manage.domain.model.ComponentSearchForm;
 @Controller
 public class ComponentMasterController {
 
+	private Map<String,Boolean> radioFoodFlag;
 	private Map<String,Integer> radioComponentStatus;
+
+	private Map<String,Boolean> initRadioFoodFlag() {
+		Map<String,Boolean> radio = new LinkedHashMap<>();
+		radio.put("食品", true);
+		radio.put("食品以外", false);
+		return radio;
+	}
 
 	private Map<String,Integer> initRadioComponentStatus() {
 		Map<String,Integer> radio = new LinkedHashMap<>();
@@ -22,8 +30,11 @@ public class ComponentMasterController {
 		radio.put("終了", 2);
 		return radio;
 	}
+
 	@GetMapping("/componentMaster")
 	public String getComponentMaster(@ModelAttribute ComponentSearchForm form,Model model) {
+		radioFoodFlag = initRadioFoodFlag();
+		model.addAttribute("radioFoodFlag", radioFoodFlag);
 		radioComponentStatus = initRadioComponentStatus();
 		model.addAttribute("radioComponentStatus",radioComponentStatus);
 
@@ -33,6 +44,8 @@ public class ComponentMasterController {
 
 	@GetMapping("/registComponent")
 	public String getRegistComponent(Model model) {
+		radioFoodFlag = initRadioFoodFlag();
+		model.addAttribute("radioFoodFlag", radioFoodFlag);
 		radioComponentStatus = initRadioComponentStatus();
 		model.addAttribute("radioComponentStatus",radioComponentStatus);
 
