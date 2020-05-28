@@ -172,6 +172,10 @@ public class UserMapperTest {
 	}
 
 	@Test
+	@Sql(statements= {
+			"DELETE FROM login_user",
+			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
+	})
 	void deleteAllUserTest() throws Exception {
 		Boolean actual = mapper.deleteAllUser();
 		assertThat(actual,is(true));
