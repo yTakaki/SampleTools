@@ -16,17 +16,15 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					</div>
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label col-form-label-sm text-right"
-					th:field="*{componentCd}">構成品コード</label>
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品コード</label>
 					<div class="col-sm-7">
-						<input type="text" class="form-control form-control-sm">
+						<input type="text" class="form-control form-control-sm" th:field="*{componentCd}">
 					</div>
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label col-form-label-sm text-right"
-					th:field="*{componentName}">商品名</label>
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">商品名</label>
 					<div class="col-sm-7">
-						<input type="text" class="form-control form-control-sm">
+						<input type="text" class="form-control form-control-sm" th:field="*{componentName}">
 					</div>
 				</div>
 				<div class="form-group row">

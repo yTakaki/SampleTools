@@ -1,5 +1,6 @@
 package com.example.demo.manage.controller;
 
+import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -61,5 +62,21 @@ public class ComponentMasterControllerTest {
 		.andExpect(status().isOk())
 		.andExpect(view().name("login/homeLayout"))
 		.andExpect(content().string(containsString("構成品登録画面")));
+	}
+
+	@Test
+	@WithMockUser
+	void postRegistComponentTest() throws Exception {
+		this.mock.perform(post("/registComponent")
+				.param("componentId","12345678")
+				.param("componentCd","TEST2")
+				.param("componentName","testdata2")
+				.param("foodFlag", "true")
+				.param("componentStatus","0"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("login/homeLayout"))
+		.andExpect(model().hasNoErrors())
+		.andExpect(model().attribute("result",is("構成品情報を1件登録しました。")));
+		assertThat(mapper.selectOneComponent("12345678").getComponentName(),is("testdata2"));
 	}
 }
