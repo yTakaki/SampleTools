@@ -72,6 +72,7 @@ public class UserMasterController {
 		}
 		System.out.println(form);
 		model.addAttribute("contents", "manage/userMaster :: userMaster_contents");
+		model.addAttribute("userSearchForm",new UserSearchForm());
 
 		User user = service.selectOneUser(form.getUserId());
 		user.setUserName(form.getUserName());
@@ -90,6 +91,8 @@ public class UserMasterController {
 	public String postDeleteUser(Model model,@PathVariable("id") String userId) {
 		System.out.println("userId="+userId);
 		model.addAttribute("contents","manage/userMaster :: userMaster_contents");
+		model.addAttribute("userSearchForm",new UserSearchForm());
+
 		boolean result = service.deleteUser(userId);
 		if (result==true) {
 			System.out.println("delete success.");
