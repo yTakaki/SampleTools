@@ -11,14 +11,16 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 			<form method="post" th:action="@{/userSearch}" th:object="${userSearchForm}">
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label text-right">ユーザーID</label>
-					<input type="text" th:field="*{userId}">
+					<input type="text" class="col-sm-7 form-control form-control-sm" th:field="*{userId}">
 				</div>
-				<div class="form-group">
-					<label>ユーザー名</label>
-					<input type="text" th:field="*{userName}">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label text-right">ユーザー名</label>
+					<input type="text" class="col-sm-7 form-control form-control-sm" th:field="*{userName}">
 				</div>
-				<button class="btn btn-primary" type="submit">検索</button>
-				<a class="btn btn-secondary" th:href="@{/userMaster}">クリア</a>
+				<div class="container">
+					<button class="btn btn-primary btn-md" type="submit">検　索</button>
+					<a class="btn btn-secondary btn-md" th:href="@{/userMaster}">クリア</a>
+				</div>
 			</form>
 		</div>
 		<label class="text-info" th:text="${result}">結果表示</label>
