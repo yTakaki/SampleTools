@@ -44,6 +44,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 				<div class="container">
 					<button class="btn btn-primary" type="submit">検  索</button>
 					<a class="btn btn-secondary" th:href="@{/componentMaster}">クリア</a>
+					<a class="btn btn-warning" th:href="@{/componentList}">構成品一覧</a>
 					<a class="btn btn-success" th:href="@{/registComponent}">新規登録</a>
 				</div>
 			</form>
@@ -57,12 +58,16 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					<th>構成品ID</th>
 					<th>構成品コード</th>
 					<th>商品名</th>
+					<th>食品フラグ</th>
+					<th>取扱状態</th>
 					<th></th>
 				</tr>
 				<tr th:each="comp:${componentList}">
 					<td th:text="${comp.componentId}"></td>
 					<td th:text="${comp.componentCd}"></td>
 					<td th:text="${comp.componentName}"></td>
+					<td th:text="${radioFoodFlag.key}" th:value="${comp.foodFlag}"></td>
+					<td th:text="${radioComponentStatus.key}" th:value="${comp.componentStatus}"></td>
 					<td>
 						<a class="btn btn-primary btn-sm" th:href="@{'/updateComponent/'+${comp.componentId}}">編集</a>
 					</td>
