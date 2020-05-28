@@ -15,6 +15,9 @@ public class Component {
 
 	private int componentStatus;
 
+	public Component() {
+	}
+
 	public Component(String id,String cd,String name,boolean flag,int status) {
 		this.setComponentId(id);
 		this.setComponentCd(cd);
