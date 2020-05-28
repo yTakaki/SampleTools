@@ -79,4 +79,41 @@ public class ComponentMasterControllerTest {
 		.andExpect(model().attribute("result",is("構成品情報を1件登録しました。")));
 		assertThat(mapper.selectOneComponent("12345678").getComponentName(),is("testdata2"));
 	}
+
+	@Test
+	@WithMockUser
+	void getComponentDetailTest() throws Exception {
+		this.mock.perform(get("/componentDetail/99999999"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("login/homeLayout"))
+		.andExpect(content().string(containsString("99999999")));
+	}
+
+	@Test
+	@WithMockUser
+	void postComponentDetailUpdateTest() throws Exception {
+		this.mock.perform(post("/componentDetail/99999999")
+				.param("componentId", "99999999")
+				.param("componentCd", "TEST")
+				.param("componentName","testdata2") // change
+				.param("foodFlag","true")
+				.param("componentStatus", "0")
+				.param("update","update"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasNoErrors())
+		.andExpect(model().attribute("result", "構成品情報を1件更新しました。"))
+		.andExpect(view().name("login/homeLayout"));
+		assertThat(mapper.selectOneComponent("99999999").getComponentName(),is("testdata2"));
+	}
+
+	@Test
+	@WithMockUser
+	void postComponentDetailDeleteTest() throws Exception {
+		this.mock.perform(post("/componentDetail/99999999").param("componentId","99999999").param("delete","delete"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasNoErrors())
+		.andExpect(model().attribute("result", "構成品情報を1件削除しました。"))
+		.andExpect(view().name("login/homeLayout"));
+		assertThat(mapper.selectOneComponent("99999999"),is(nullValue()));
+	}
 }

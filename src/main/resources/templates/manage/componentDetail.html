@@ -6,11 +6,15 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 </head>
 <body>
 	<div th:fragment="componentDetail_contents">
-		<div class="page-header">
+		<div class="page-header row">
 			<h1>構成品登録画面</h1>
+			<div class="col-sm-5 text-right">
+				<a class="btn btn-link btn-lg" th:href="@{/componentMaster}">戻る</a>
+			</div>
 		</div>
 		<div class="col-sm-8">
-			<form th:action="@{/componentDetail}" method="post" th:object="${registComponentForm}">
+			<form th:action="@{'/componentDetail/'+${registComponentForm.componentId}}"
+			method="post" th:object="${registComponentForm}">
 				<table class="table table-bordered table-hover">
 				<tr>
 					<th>構成品ID</th>
@@ -70,8 +74,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 						<span th:text="${error.message}">Error Message</span>
 					</li>
 				</ul>
-				<button class="btn btn-primary" type="submit">登録</button>
-				<a class="btn btn-secondary" th:href="@{/componentMaster}">戻る</a>
+				<div>
+					<button class="btn btn-primary" type="submit" name="update">更新</button>
+					<button class="btn btn-danger" type="submit" name="delete">削除</button>
+				</div>
 			</form>
 		</div>
 	</div>

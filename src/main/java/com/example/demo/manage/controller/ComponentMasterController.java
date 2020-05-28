@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.manage.domain.model.Component;
@@ -107,6 +108,82 @@ public class ComponentMasterController {
 		} else {
 			model.addAttribute("result","構成品情報の登録に失敗しました。");
 			System.out.println("insert failure.");
+		}
+		return "login/homeLayout";
+	}
+
+	@GetMapping("/componentDetail/{id}")
+	public String getComponentDetail(@ModelAttribute RegistComponentForm form,Model model,
+			@PathVariable("id") String componentId) {
+		// initialization
+		radioFoodFlag = initRadioFoodFlag();
+		model.addAttribute("radioFoodFlag", radioFoodFlag);
+		radioComponentStatus = initRadioComponentStatus();
+		model.addAttribute("radioComponentStatus",radioComponentStatus);
+		// configuration view
+		model.addAttribute("contents","manage/componentDetail :: componentDetail_contents");
+		// execution
+		System.out.println("componentId="+componentId);
+		if (componentId!=null && componentId.length()>0) {
+			Component comp = service.selectOneComponent(componentId);
+			form.setComponentId(comp.getComponentId());
+			form.setComponentCd(comp.getComponentCd());
+			form.setComponentName(comp.getComponentName());
+			form.setFoodFlag(comp.isFoodFlag());
+			form.setComponentStatus(comp.getComponentStatus());
+			model.addAttribute("registComponentForm", form);
+		}
+		return "login/homeLayout";
+	}
+
+	@PostMapping(value="/componentDetail/{id}",params="update")
+	public String postComponentDetailUpdate(@ModelAttribute @Validated RegistComponentForm form,
+			BindingResult bind,Model model,@PathVariable("id") String componentId) {
+		if (bind.hasErrors()) {
+			return getComponentDetail(form,model,componentId);
+		}
+		System.out.println(form);
+		// initialization
+		radioFoodFlag = initRadioFoodFlag();
+		model.addAttribute("radioFoodFlag", radioFoodFlag);
+		radioComponentStatus = initRadioComponentStatus();
+		model.addAttribute("radioComponentStatus",radioComponentStatus);
+		// configuration view
+		model.addAttribute("contents","manage/componentMaster :: componentMaster_contents");
+		model.addAttribute("componentSearchForm", new ComponentSearchForm());
+		// execution
+		Component comp = new Component(form.getComponentId(),form.getComponentCd(),
+				form.getComponentName(),form.isFoodFlag(),form.getComponentStatus());
+		boolean result = service.updateComponent(comp);
+		if (result) {
+			model.addAttribute("result","構成品情報を1件更新しました。");
+			System.out.println("update success.");
+		} else {
+			model.addAttribute("result","構成品情報の更新に失敗しました。");
+			System.out.println("update failure.");
+		}
+		return "login/homeLayout";
+	}
+
+	@PostMapping(value="/componentDetail/{id}",params="delete")
+	public String postComponentDetailDelete(Model model,@PathVariable("id") String componentId) {
+		System.out.println("componentId="+componentId);
+		// initialization
+		radioFoodFlag = initRadioFoodFlag();
+		model.addAttribute("radioFoodFlag", radioFoodFlag);
+		radioComponentStatus = initRadioComponentStatus();
+		model.addAttribute("radioComponentStatus",radioComponentStatus);
+		// configuration view
+		model.addAttribute("contents","manage/componentMaster :: componentMaster_contents");
+		model.addAttribute("componentSearchForm", new ComponentSearchForm());
+		// execution
+		boolean result = service.deleteComponent(componentId);
+		if (result) {
+			model.addAttribute("result","構成品情報を1件削除しました。");
+			System.out.println("delete success.");
+		} else {
+			model.addAttribute("result","構成品情報の削除に失敗しました。");
+			System.out.println("delete failure.");
 		}
 		return "login/homeLayout";
 	}
