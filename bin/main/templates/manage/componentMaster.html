@@ -70,7 +70,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					<td th:text="(${comp.componentStatus}==0)?'取扱い可能':
 					((${comp.componentStatus}==1)?'終売予定':'終了')"></td>
 					<td>
-						<a class="btn btn-primary btn-sm" th:href="@{'/updateComponent/'+${comp.componentId}}">編集</a>
+						<a class="btn btn-primary btn-sm" th:href="@{'/componentDetail/'+${comp.componentId}}">編集</a>
 					</td>
 				</tr>
 				</table>
