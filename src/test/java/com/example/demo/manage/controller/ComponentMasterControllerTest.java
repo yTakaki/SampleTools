@@ -53,4 +53,13 @@ public class ComponentMasterControllerTest {
 		.andExpect(content().string(containsString("食品")))
 		.andExpect(content().string(containsString("取扱い可能")));
 	}
+
+	@Test
+	@WithMockUser
+	void getRegistComponentTest() throws Exception {
+		this.mock.perform(get("/registComponent"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("login/homeLayout"))
+		.andExpect(content().string(containsString("構成品登録画面")));
+	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.example.demo.manage.domain.model.Component;
 import com.example.demo.manage.domain.model.ComponentSearchForm;
+import com.example.demo.manage.domain.model.RegistComponentForm;
 import com.example.demo.manage.domain.service.ComponentService;
 
 @Controller
@@ -40,37 +41,41 @@ public class ComponentMasterController {
 
 	@GetMapping("/componentMaster")
 	public String getComponentMaster(@ModelAttribute ComponentSearchForm form,Model model) {
+		// initialization
 		radioFoodFlag = initRadioFoodFlag();
 		model.addAttribute("radioFoodFlag", radioFoodFlag);
 		radioComponentStatus = initRadioComponentStatus();
 		model.addAttribute("radioComponentStatus",radioComponentStatus);
-
+		// configuration view
 		model.addAttribute("contents","manage/componentMaster :: componentMaster_contents");
 		return "login/homeLayout";
 	}
 
 	@GetMapping("/componentList")
 	public String getComponentList(@ModelAttribute ComponentSearchForm form,Model model) {
+		// initialization
 		radioFoodFlag = initRadioFoodFlag();
 		model.addAttribute("radioFoodFlag", radioFoodFlag);
 		radioComponentStatus = initRadioComponentStatus();
 		model.addAttribute("radioComponentStatus",radioComponentStatus);
-
+		// execution
 		List<Component> componentList = service.selectAllComponent();
 		System.out.println(componentList);
 		model.addAttribute("result","合計"+componentList.size()+"件の構成品を抽出しました。");
 		model.addAttribute("componentList", componentList);
+		// configuration view
 		model.addAttribute("contents","manage/componentMaster :: componentMaster_contents");
 		return "login/homeLayout";
 	}
 	@GetMapping("/registComponent")
-	public String getRegistComponent(Model model) {
+	public String getRegistComponent(@ModelAttribute RegistComponentForm form,Model model) {
+		// initialization
 		radioFoodFlag = initRadioFoodFlag();
 		model.addAttribute("radioFoodFlag", radioFoodFlag);
 		radioComponentStatus = initRadioComponentStatus();
 		model.addAttribute("radioComponentStatus",radioComponentStatus);
-
-		model.addAttribute("contents","manage/registComponent :: componentRegist_contents");
+		// configuration view
+		model.addAttribute("contents","manage/registComponent :: registComponent_contents");
 		return "login/homeLayout";
 	}
 }
