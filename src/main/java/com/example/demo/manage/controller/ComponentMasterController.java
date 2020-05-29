@@ -55,6 +55,29 @@ public class ComponentMasterController {
 		return "login/homeLayout";
 	}
 
+	@PostMapping("/componentSearch")
+	public String postComponentSearch(
+			@ModelAttribute @Validated ComponentSearchForm form,BindingResult bind,Model model) {
+		if (bind.hasErrors()) {
+			getComponentMaster(form,model);
+		}
+		System.out.println(form);
+		// initialization
+		radioFoodFlag = initRadioFoodFlag();
+		model.addAttribute("radioFoodFlag", radioFoodFlag);
+		radioComponentStatus = initRadioComponentStatus();
+		model.addAttribute("radioComponentStatus",radioComponentStatus);
+		// configuration view
+		model.addAttribute("contents","manage/componentMaster :: componentMaster_contents");
+		// execution
+		List<Component> componentList = service.searchComponent(form.getComponentId(), form.getComponentCd(),
+				form.getComponentName(),form.isFoodFlag(),form.getComponentStatus());
+		System.out.println(componentList);
+		model.addAttribute("result","合計"+componentList.size()+"件の構成品を抽出しました。");
+		model.addAttribute("componentList", componentList);
+		return "login/homeLayout";
+	}
+
 	@GetMapping("/componentList")
 	public String getComponentList(@ModelAttribute ComponentSearchForm form,Model model) {
 		// initialization

@@ -45,6 +45,23 @@ public class ComponentMasterControllerTest {
 
 	@Test
 	@WithMockUser
+	void postComponentSearchTest() throws Exception {
+		this.mock.perform(post("/componentSearch")
+				.param("componentId", "9999")
+				.param("componentCd", "TE")
+				.param("componentName", "test")
+				.param("foodFlag", "true")
+				.param("componentStatus", "0"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("login/homeLayout"))
+		.andExpect(model().attribute("result", "合計1件の構成品を抽出しました。"))
+		.andExpect(content().string(containsString("testdata")))
+		.andExpect(content().string(containsString("食品")))
+		.andExpect(content().string(containsString("取扱い可能")));
+	}
+
+	@Test
+	@WithMockUser
 	void getComponentListTest() throws Exception {
 		this.mock.perform(get("/componentList"))
 		.andExpect(status().isOk())
