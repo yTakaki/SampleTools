@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div th:fragment="itemMaster_contents">
+		<div class="page-header">
+			<h1>商品検索画面</h1>
+			<form method="post" th:action="@{/itemSearch}" th:object="${itemSearchForm}">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">商品ID</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control form-control-sm" th:field="*{itemId}">
+					</div>
+					<label class="col-form-label col-form-label-sm text-right">商品コード</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control form-control-sm" th:field="*{itemCd}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">商品名</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control form-control-sm" th:field="*{itemName}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成区分</label>
+					<div th:each="flg:${radioCompositeFlag}" class="form-check-inline">
+						<input type="radio" name="radioCompositeFlag" th:text="${flg.key}"
+						 th:value="${flg.value}" th:field="*{compositeFlag}" class="form-check-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">取扱状態</label>
+					<div th:each="status:${radioItemStatus}" class="form-check-inline">
+						<input type="radio" name="radioItemStatus" th:text="${status.key}"
+						 th:value="${status.value}" th:field="*{itemStatus}" class="form-check-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID</label>
+					<div class="col-sm-7 row">
+						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{compId}"
+						th:text="${compResult}">
+						<p class="form-control-sm">　(完全一致検索)　</p>
+						<a class="btn btn-primary btn-sm form-control-sm" th:href="@{/searchComp}">構成品ID検索</a>
+					</div>
+				</div>
+				<div class="container">
+					<button class="btn btn-primary btn-sm" type="submit">検　索</button>
+					<a class="btn btn-info btn-sm" th:href="@{/itemList}">一　覧</a>
+					<a class="btn btn-secondary btn-sm" th:href="@{/itemMaster}">クリア</a>
+					<a class="btn btn-success btn-sm" th:href="@{/registItem}">新規登録</a>
+				</div>
+			</form>
+		</div>
+		<label class="text-info" th:text="${result}">結果表示</label>
+		<br>
+		<div class="containar-fluid">
+			<div class="row">
+				<table class="table table-bordered table-hover table-striped">
+				<tr>
+					<th>商品ID</th>
+					<th>商品コード</th>
+					<th>商品名</th>
+					<th>構成区分</th>
+					<th>取扱状態</th>
+					<th></th>
+				</tr>
+				<tr th:each="item:${itemList}">
+					<td th:text="${item.itemId}"></td>
+					<td th:text="${item.itemCd}"></td>
+					<td th:text="${item.itemName}"></td>
+					<td th:text="${item.compositeFlag}?'セットアップ品':'既製品'"></td>
+					<td th:text="(${item.itemStatus}==0)?'取扱い可能':
+					((${item.itemStatus}==1)?'終売予定':'終了')"></td>
+					<td>
+						<a class="btn btn-primary btn-sm" th:href="@{'/itemDetail/'+${item.itemId}}">編集</a>
+					</td>
+				</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
