@@ -24,20 +24,6 @@ public interface ComponentMapper {
 			@Param("id")String id,@Param("cd")String cd,@Param("name")String name,
 			@Param("flag")boolean flag,@Param("status")int status);
 
-	public List<Component> searchComp1(@Param("id")String id,@Param("flag")boolean flag,@Param("status")int status);
-
-	public List<Component> searchComp2(@Param("cd")String cd,@Param("flag")boolean flag,@Param("status")int status);
-
-	public List<Component> searchComp3(@Param("name")String name,@Param("flag")boolean flag,@Param("status")int status);
-
-	public List<Component> searchComp4(
-			@Param("cd")String cd,@Param("name")String name,@Param("flag")boolean flag,@Param("status")int status);
-
-	public List<Component> searchComp5(
-			@Param("id")String id,@Param("name")String name,@Param("flag")boolean flag,@Param("status")int status);
-
-	public List<Component> searchComp6(
-			@Param("id")String id,@Param("cd")String cd,@Param("flag")boolean flag,@Param("status")int status);
-
 	public boolean deleteAllComponent(); // for junit test.
+
 }

@@ -49,57 +49,6 @@
 	AND component_status = #{status}
 	</select>
 
-	<select id="searchComp1" resultMap="comp">
-	SELECT *
-	FROM component
-	WHERE component_id LIKE CONCAT('%',#{id},'%')
-	AND food_flag = #{flag}
-	AND component_status = #{status}
-	</select>
-
-	<select id="searchComp2" resultMap="comp">
-	SELECT *
-	FROM component
-	WHERE component_cd LIKE CONCAT('%',#{cd},'%')
-	AND food_flag = #{flag}
-	AND component_status = #{status}
-	</select>
-
-	<select id="searchComp3" resultMap="comp">
-	SELECT *
-	FROM component
-	WHERE component_name LIKE CONCAT('%',#{name},'%')
-	AND food_flag = #{flag}
-	AND component_status = #{status}
-	</select>
-
-	<select id="searchComp4" resultMap="comp">
-	SELECT *
-	FROM component
-	WHERE component_cd LIKE CONCAT('%',#{cd},'%')
-	AND component_name LIKE CONCAT('%',#{name},'%')
-	AND food_flag = #{flag}
-	AND component_status = #{status}
-	</select>
-
-	<select id="searchComp5" resultMap="comp">
-	SELECT *
-	FROM component
-	WHERE component_id LIKE CONCAT('%',#{id},'%')
-	AND component_name LIKE CONCAT('%',#{name},'%')
-	AND food_flag = #{flag}
-	AND component_status = #{status}
-	</select>
-
-	<select id="searchComp6" resultMap="comp">
-	SELECT *
-	FROM component
-	WHERE component_id LIKE CONCAT('%',#{id},'%')
-	AND component_cd LIKE CONCAT('%',#{cd},'%')
-	AND food_flag = #{flag}
-	AND component_status = #{status}
-	</select>
-
 	<delete id="deleteAllComponent">
 	DELETE FROM component
 	</delete>

@@ -18,16 +18,4 @@ public interface ComponentService {
 
 	public List<Component> searchComponent(String id,String cd,String name,boolean flag,int status);
 
-	public List<Component> searchComp1(String id,boolean flag,int status);
-
-	public List<Component> searchComp2(String cd,boolean flag,int status);
-
-	public List<Component> searchComp3(String name,boolean flag,int status);
-
-	public List<Component> searchComp4(String cd,String name,boolean flag,int status);
-
-	public List<Component> searchComp5(String id,String name,boolean flag,int status);
-
-	public List<Component> searchComp6(String id,String cd,boolean flag,int status);
-
 }

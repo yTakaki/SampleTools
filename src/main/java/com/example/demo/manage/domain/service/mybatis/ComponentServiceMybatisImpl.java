@@ -47,34 +47,4 @@ public class ComponentServiceMybatisImpl implements ComponentService {
 		return mapper.searchComponent(id, cd, name, flag, status);
 	}
 
-	@Override
-	public List<Component> searchComp1(String id,boolean flag,int status) {
-		return mapper.searchComp1(id, flag, status);
-	}
-
-	@Override
-	public List<Component> searchComp2(String cd,boolean flag,int status) {
-		return mapper.searchComp2(cd, flag, status);
-	}
-
-	@Override
-	public List<Component> searchComp3(String name,boolean flag,int status) {
-		return mapper.searchComp3(name, flag, status);
-	}
-
-	@Override
-	public List<Component> searchComp4(String cd,String name,boolean flag,int status) {
-		return mapper.searchComp4(cd, name, flag, status);
-	}
-
-	@Override
-	public List<Component> searchComp5(String id,String name,boolean flag,int status) {
-		return mapper.searchComp5(id, name, flag, status);
-	}
-
-	@Override
-	public List<Component> searchComp6(String id,String cd,boolean flag,int status) {
-		return mapper.searchComp6(id, cd, flag, status);
-	}
-
 }
