@@ -11,13 +11,11 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 			<form method="post" th:action="@{/componentSearch}" th:object="${componentSearchForm}">
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID</label>
-					<div class="col-sm-7">
+					<div class="col-sm-3">
 						<input type="text" class="form-control form-control-sm" th:field="*{componentId}">
 					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品コード</label>
-					<div class="col-sm-7">
+					<label class="col-form-label col-form-label-sm text-right">構成品コード</label>
+					<div class="col-sm-3">
 						<input type="text" class="form-control form-control-sm" th:field="*{componentCd}">
 					</div>
 				</div>
@@ -28,14 +26,12 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					</div>
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label col-form-label-sm text-right">食品フラグ</label>
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">食品フラグ：</label>
 					<div th:each="flg:${radioFoodFlag}" class="form-check-inline">
 						<input type="radio" name="radioFoodFlag" th:text="${flg.key}"
 						 th:value="${flg.value}" th:field="*{foodFlag}" class="form-check-input">
 					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-2 col-form-label col-form-label-sm text-right">取扱状態</label>
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">取扱状態：</label>
 					<div th:each="status:${radioComponentStatus}" class="form-check-inline">
 						<input type="radio" name="radioComponentStatus" th:text="${status.key}"
 						 th:value="${status.value}" th:field="*{componentStatus}" class="form-check-input">
@@ -47,6 +43,12 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					<a class="btn btn-secondary btn-sm" th:href="@{/componentMaster}">クリア</a>
 					<a class="btn btn-success btn-sm" th:href="@{/registComponent}">新規登録</a>
 				</div>
+				<ul>
+					<li th:each="error:${#fields.detailedErrors()}">
+						<span class="text-danger" th:if="${#fields.hasErrors()}" th:text="${error.message}">
+						error message</span>
+					</li>
+				</ul>
 			</form>
 		</div>
 		<label class="text-info" th:text="${result}">結果表示</label>
