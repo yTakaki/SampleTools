@@ -1,6 +1,7 @@
 package com.example.demo.manage.domain.model;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
@@ -20,8 +21,10 @@ public class RegistItemForm {
 	@Size(max=50)
 	private String itemName;
 
+	@NotNull
 	private boolean compositeFlag;
 
+	@NotNull
 	private int itemStatus;
 
 	private String comp1;
