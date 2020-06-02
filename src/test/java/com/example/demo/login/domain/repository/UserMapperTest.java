@@ -1,4 +1,4 @@
-package com.example.demo.login.domain.repository.mybatis;
+package com.example.demo.login.domain.repository;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.example.demo.login.domain.model.User;
+import com.example.demo.login.domain.repository.UserMapper;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)

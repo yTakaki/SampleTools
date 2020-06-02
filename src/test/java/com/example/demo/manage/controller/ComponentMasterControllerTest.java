@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.manage.domain.model.Component;
-import com.example.demo.manage.domain.repository.mybatis.ComponentMapper;
+import com.example.demo.manage.domain.repository.ComponentMapper;
 
 @AutoConfigureMockMvc
 @SpringBootTest

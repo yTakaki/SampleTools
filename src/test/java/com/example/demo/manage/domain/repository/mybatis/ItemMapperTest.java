@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 
 import com.example.demo.manage.domain.model.Item;
+import com.example.demo.manage.domain.repository.ItemMapper;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)

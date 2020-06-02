@@ -17,7 +17,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.login.domain.model.User;
-import com.example.demo.login.domain.repository.mybatis.UserMapper;
+import com.example.demo.login.domain.repository.UserMapper;
 
 @SpringBootTest
 @Transactional

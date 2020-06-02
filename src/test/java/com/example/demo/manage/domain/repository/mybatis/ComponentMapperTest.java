@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.example.demo.manage.domain.model.Component;
+import com.example.demo.manage.domain.repository.ComponentMapper;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)

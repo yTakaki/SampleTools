@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.demo.manage.domain.repository.mybatis.ComponentMapper">
+<mapper namespace="com.example.demo.manage.domain.repository.ComponentMapper">
 
 	<resultMap type="com.example.demo.manage.domain.model.Component" id="comp">
 		<id column="component_id" property="componentId"></id>

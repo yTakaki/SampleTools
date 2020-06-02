@@ -2,23 +2,49 @@ package com.example.demo.login.domain.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.demo.login.domain.model.User;
+import com.example.demo.login.domain.repository.UserMapper;
 
-public interface UserService {
+@Transactional
+@Service
+public class UserService {
 
-	public boolean insertUser(User user);
+	@Autowired
+	UserMapper mapper;
 
-	public User selectOneUser(String userId);
+	public boolean insertUser(User user) {
+		return mapper.insertUser(user);
+	}
 
-	public List<User> selectAllUser();
+	public User selectOneUser(String userId) {
+		return mapper.selectOneUser(userId);
+	}
 
-	public boolean updateUser(User user);
+	public List<User> selectAllUser() {
+		return mapper.selectAllUser();
+	}
 
-	public boolean deleteUser(String userId);
+	public boolean updateUser(User user) {
+		return mapper.updateUser(user);
+	}
 
-	public List<User> searchUser(String userId,String userName);
+	public boolean deleteUser(String userId) {
+		return mapper.deleteUser(userId);
+	}
 
-	public List<User> searchUserId(String userId);
+	public List<User> searchUser(String userId,String userName) {
+		return mapper.searchUser(userId,userName);
+	}
 
-	public List<User> searchUserName(String userName);
+	public List<User> searchUserId(String userId) {
+		return mapper.searchUserId(userId);
+	}
+
+	public List<User> searchUserName(String userName) {
+		return mapper.searchUserName(userName);
+	}
 }
