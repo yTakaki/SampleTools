@@ -3,47 +3,153 @@ package com.example.demo.login.controller;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.login.domain.repository.mybatis.UserMapper;
+import com.example.demo.login.domain.service.UserService;
 
-@AutoConfigureMockMvc
-@SpringBootTest
-@Transactional
+@WebMvcTest(controllers = SignupController.class)
 public class SignupControllerTest {
 
 	@Autowired
 	private MockMvc mock;
 
-	@Autowired
-	private UserMapper mapper;
-
-	@BeforeEach
-	void beforeTest() throws Exception {
-		mapper.deleteAllUser();
-	}
+	@MockBean
+	private UserService service;
 
 	@Test
-	void getSignupTest() throws Exception {
+	void ユーザー登録ページへのリクエストに対して正常に画面が返されること() throws Exception {
 
-		this.mock.perform(get("/signup"))
+		mock.perform(get("/signup"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("login/signup"));
 	}
 
 	@Test
-	void postSignupTest() throws Exception {
-		this.mock.perform(post("/signup").param("userId", "testdata@sample.com")
+	void ユーザー登録ページにて適正にフォーム入力して登録ボタンを押すとログイン画面へリダイレクトが返されること() throws Exception {
+		mock.perform(post("/signup").param("userId", "testdata@sample.com")
 				.param("password", "pass").param("userName", "testuser"))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(model().hasNoErrors())
 		.andExpect(view().name("redirect:/login"));
+	}
+
+	@Test
+	void ユーザー登録フォームのユーザーIDがNullのとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup")
+				.param("password", "pass").param("userName", "testuser"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
+	}
+
+	@Test
+	void ユーザー登録フォームのユーザーIDが空文字のとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup").param("userId", "")
+				.param("password", "pass").param("userName", "testuser"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
+	}
+
+	@Test
+	void ユーザー登録フォームのユーザーIDが空白のとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup").param("userId"," ")
+				.param("password", "pass").param("userName", "testuser"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
+	}
+
+	@Test
+	void ユーザー登録フォームのユーザーIDがEメール形式でないとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup").param("userId", "sample")
+				.param("password", "pass").param("userName", "testuser"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
+	}
+
+	@Test
+	void ユーザー登録フォームのパスワードがNullのとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup").param("userId", "testdata@sample.com").param("userName", "testuser"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
+	}
+
+	@Test
+	void ユーザー登録フォームのパスワードが空文字のとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup").param("userId", "testdata@sample.com")
+				.param("password", "").param("userName", "testuser"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
+	}
+
+	@Test
+	void ユーザー登録フォームのパスワードが空白のとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup").param("userId","testdata@sample.com")
+				.param("password", " ").param("userName", "testuser"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
+	}
+
+	@Test
+	void ユーザー登録フォームのパスワードが3文字のとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup").param("userId", "testdata@sample.com")
+				.param("password", "pas").param("userName", "testuser"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
+	}
+
+	@Test
+	void ユーザー登録フォームのパスワードが17文字のとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup").param("userId", "testdata@sample.com")
+				.param("password", "abcdefghijklmnopq").param("userName", "testuser"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
+	}
+
+	@Test
+	void ユーザー登録フォームのユーザー名がNullのとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup").param("userId", "testdata@sample.com").param("password", "pass"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
+	}
+
+	@Test
+	void ユーザー登録フォームのユーザー名が空文字のとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup").param("userId", "testdata@sample.com")
+				.param("password", "pass").param("userName", ""))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
+	}
+
+	@Test
+	void ユーザー登録フォームのユーザー名が空白のとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup").param("userId","testdata@sample.com")
+				.param("password", "pass").param("userName", " "))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
+	}
+
+	@Test
+	void ユーザー登録フォームのユーザー名が21文字のとき例外情報が画面に表示されること() throws Exception {
+		mock.perform(post("/signup").param("userId", "testdata@sample.com")
+				.param("password", "pass").param("userName", "abcdefghijklmnopqrstu"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("login/signup"));
 	}
 
 }

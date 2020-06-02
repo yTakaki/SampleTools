@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.login.domain.model.SignupForm;
 import com.example.demo.login.domain.model.User;
-import com.example.demo.login.domain.repository.mybatis.UserMapper;
+import com.example.demo.login.domain.service.UserService;
 
 @Controller
 public class SignupController {
 
 	@Autowired
-	private UserMapper userMapper;
+	private UserService service;
 
 	@GetMapping("/signup")
 	public String getSignup(@ModelAttribute SignupForm form,Model model) {
@@ -32,14 +32,13 @@ public class SignupController {
 		}
 		System.out.println(form);
 
-		User user = new User();
-
-		user.setUserId(form.getUserId());
-		user.setPassword(form.getPassword());
-		user.setUserName(form.getUserName());
-		boolean result = userMapper.insertUser(user);
-		if (result) { System.out.println("insert success"); }
-		else { System.out.println("insert failure"); }
+		User user = new User(form.getUserId(),form.getPassword(),form.getUserName());
+		boolean result = service.insertUser(user);
+		if (result) {
+			System.out.println("insert success");
+		} else {
+			System.out.println("insert failure");
+		}
 
 		return "redirect:/login";
 	}

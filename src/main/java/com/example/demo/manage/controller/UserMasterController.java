@@ -1,6 +1,5 @@
 package com.example.demo.manage.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,20 +30,11 @@ public class UserMasterController {
 	}
 
 	@PostMapping("/userSearch")
-	public String postUserSearch(@ModelAttribute UserSearchForm form,BindingResult bind,Model model) {
+	public String postUserSearch(@ModelAttribute @Validated UserSearchForm form,BindingResult bind,Model model) {
 		if (bind.hasErrors()) {
 			return getUserMaster(form,model);
 		}
-		List<User> userList = new ArrayList<>();
-		if (form.getUserId()==null && form.getUserName()==null) {
-			userList = service.selectAllUser();
-		} else if (form.getUserId()==null && form.getUserName()!=null) {
-			userList = service.searchUserId(form.getUserId());
-		} else if (form.getUserId()!=null && form.getUserName()==null) {
-			userList = service.searchUserName(form.getUserName());
-		} else {
-			userList = service.searchUser(form.getUserId(), form.getUserName());
-		}
+		List<User> userList = service.searchUser(form.getUserId(), form.getUserName());
 		model.addAttribute("userList", userList);
 		model.addAttribute("result", "合計で"+userList.size()+"件のユーザー情報を取得しました。");
 		model.addAttribute("contents", "manage/userMaster :: userMaster_contents");

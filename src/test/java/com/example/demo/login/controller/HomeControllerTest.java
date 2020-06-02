@@ -6,12 +6,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-@AutoConfigureMockMvc
 @WebMvcTest(controllers=HomeController.class)
 public class HomeControllerTest {
 
@@ -20,8 +18,8 @@ public class HomeControllerTest {
 
 	@WithMockUser
 	@Test
-	void homeへのGETリクエストに対するhomeLayout画面表示の確認テスト() throws Exception {
-		this.mock.perform(get("/home"))
+	void ホーム画面へのリクエストに対して正常な画面が返されること() throws Exception {
+		mock.perform(get("/home"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("login/homeLayout"))
 		.andExpect(content().string(containsString("ホーム画面")));
@@ -29,8 +27,8 @@ public class HomeControllerTest {
 
 	@WithMockUser
 	@Test
-	void logoutへのPOSTリクエストに対するlogin画面表示の確認テスト() throws Exception {
-		this.mock.perform(post("/logout"))
+	void ホーム画面にてログアウトボタンを押すとログイン画面へリダイレクトが返されること() throws Exception {
+		mock.perform(post("/logout"))
 		.andExpect(status().isFound())
 		.andExpect(redirectedUrlPattern("/login*"));
 	}
