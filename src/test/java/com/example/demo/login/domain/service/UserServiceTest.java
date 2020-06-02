@@ -1,130 +1,72 @@
 package com.example.demo.login.domain.service;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.UserMapper;
 
-@SpringBootTest
-@Transactional
-@AutoConfigureTestDatabase(replace=Replace.NONE)
+@SpringJUnitConfig(classes = UserServiceTest.Config.class)
 public class UserServiceTest {
 
-	@Autowired
-	private UserService service;
+	@ComponentScan({
+		"com.example.demo.login.domain.service"
+	})
+	static class Config {
+	}
 
 	@Autowired
+	private UserService sut;
+
+	@MockBean
 	private UserMapper mapper;
 
-	@Autowired
-	private NamedParameterJdbcOperations jdbc;
+	@Test
+	void insertUserが実行されること() throws Exception {
+		when(mapper.insertUser(any())).thenReturn(true);
+		sut.insertUser(any());
 
-	@BeforeEach
-	void beforeTest() throws Exception {
-		mapper.deleteAllUser();
-		User user = new User();
-		user.setUserId("testdata@sample.com");
-		user.setPassword("pass");
-		user.setUserName("testuser");
-		mapper.insertUser(user);
+		verify(mapper,times(1)).insertUser(any());
 	}
 
 	@Test
-	void insertUserTest() throws Exception {
-		User user = new User();
-		user.setUserId("testdata@sample.com");
-		user.setPassword("pass");
-		user.setUserName("testdata");
-		mapper.deleteAllUser();
-		service.insertUser(user);
-		User actual = jdbc.queryForObject("SELECT * FROM login_user WHERE user_id = :user_id",
-				new MapSqlParameterSource("user_id",user.getUserId()),
-				new BeanPropertyRowMapper<>(User.class));
-		assertThat(actual.getPassword(),is("pass"));
-		assertThat(actual.getUserName(),is("testdata"));
+	void selectOneUserが実行されること() throws Exception {
+		when(mapper.selectOneUser("testdata@sample.com")).thenReturn(any());
+		sut.selectOneUser("testdata@sample.com");
+
+		verify(mapper,times(1)).selectOneUser(anyString());
 	}
 
 	@Test
-	void selectOneUserTest() throws Exception {
-		String id = "testdata@sample.com";
-		User actual = service.selectOneUser(id);
-		assertThat(actual.getUserId(),is("testdata@sample.com"));
-		assertThat(actual.getPassword(),is("pass"));
-		assertThat(actual.getUserName(),is("testuser"));
+	void selectAllUserが実行されること() throws Exception {
+		User user = new User("testdata@sample.com","pass","testuser");
+		when(mapper.selectAllUser()).thenReturn(List.of(user));
+		sut.selectAllUser();
+
+		verify(mapper,times(1)).selectAllUser();
 	}
 
 	@Test
-	void selectAllUserTest() throws Exception {
-		List<User> actual = service.selectAllUser();
-		assertThat(actual.size(),is(1));
-		assertThat(actual.get(0).getUserId(),is("testdata@sample.com"));
-		assertThat(actual.get(0).getPassword(),is("pass"));
-		assertThat(actual.get(0).getUserName(),is("testuser"));
+	void updateUserが実行されること() throws Exception {
+		when(mapper.updateUser(any())).thenReturn(true);
+		sut.updateUser(any());
+
+		verify(mapper,times(1)).updateUser(any());
 	}
 
 	@Test
-	void updateUserTest() throws Exception {
-		User user = new User();
-		user.setUserId("testdata@sample.com");
-		user.setPassword("pass");
-		user.setUserName("user"); // change
-		service.updateUser(user);
-		User actual = jdbc.queryForObject("SELECT * FROM login_user WHERE user_id = :user_id",
-				new MapSqlParameterSource("user_id",user.getUserId()),
-				new BeanPropertyRowMapper<>(User.class));
-		assertThat(actual.getUserName(),is("user"));
-	}
+	void deleteUserが実行されること() throws Exception {
+		when(mapper.deleteUser(any())).thenReturn(true);
+		sut.deleteUser(any());
 
-	@Test
-	void deleteUserTest() throws Exception {
-		String id = "testdata@sample.com";
-		boolean actual = service.deleteUser(id);
-		assertThat(actual,is(true));
-		assertThat(mapper.selectOneUser(id),is(nullValue()));
-	}
-
-	@Test
-	void searchUserTest() throws Exception {
-		String userId = "test";
-		String userName = "test";
-		List<User> actual = service.searchUser(userId,userName);
-		assertThat(actual.size(),is(1));
-		assertThat(actual.get(0).getUserId(),is("testdata@sample.com"));
-		assertThat(actual.get(0).getPassword(),is("pass"));
-		assertThat(actual.get(0).getUserName(),is("testuser"));
-	}
-
-	@Test
-	void searchUserIdTest() throws Exception {
-		String userId = "test";
-		List<User> actual = service.searchUserId(userId);
-		assertThat(actual.size(),is(1));
-		assertThat(actual.get(0).getUserId(),is("testdata@sample.com"));
-		assertThat(actual.get(0).getPassword(),is("pass"));
-		assertThat(actual.get(0).getUserName(),is("testuser"));
-	}
-
-	@Test
-	void searchUserNameTest() throws Exception {
-		String userName = "test";
-		List<User> actual = service.searchUserName(userName);
-		assertThat(actual.size(),is(1));
-		assertThat(actual.get(0).getUserId(),is("testdata@sample.com"));
-		assertThat(actual.get(0).getPassword(),is("pass"));
-		assertThat(actual.get(0).getUserName(),is("testuser"));
+		verify(mapper,times(1)).deleteUser(any());
 	}
 }

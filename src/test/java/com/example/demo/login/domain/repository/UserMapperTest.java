@@ -2,185 +2,83 @@ package com.example.demo.login.domain.repository;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.test.context.jdbc.Sql;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.test.context.TestPropertySource;
 
 import com.example.demo.login.domain.model.User;
-import com.example.demo.login.domain.repository.UserMapper;
 
 @MybatisTest
-@AutoConfigureTestDatabase(replace=Replace.NONE)
+@TestPropertySource(locations = "classpath:test.properties")
 public class UserMapperTest {
 
 	@Autowired
-	private UserMapper mapper;
+	private UserMapper sut;
 
-	@Autowired
-	private NamedParameterJdbcOperations jdbc;
-
-	@Test
-	void insertTest() throws Exception {
-		{
-			// setup
-			User user = new User();
-			user.setUserId("testdata@sample.com");
-			user.setPassword("password");
-			user.setUserName("testuser");
-			// execute
-			mapper.deleteUser("testdata@sample.com");
-			mapper.insertUser(user);
-			User actual = jdbc.queryForObject("SELECT * FROM login_user WHERE user_id = :user_id",
-					new MapSqlParameterSource("user_id",user.getUserId()),
-					new BeanPropertyRowMapper<>(User.class));
-			// assertion
-			assertThat(actual.getPassword(),is("password"));
-			assertThat(actual.getUserName(),is("testuser"));
-		}
+	@Test // selectOneUser
+	void 登録済みデータを指定検索できること() throws Exception {
+		User expect = new User("testdata@sample.com","pass","testuser");
+		User actual = sut.selectOneUser("testdata@sample.com");
+		assertThat(actual,is(expect));
 	}
 
+	@Test // selectOneUser -> Error
+	void 未登録データを指定検索するとNullを返すこと() throws Exception {
+		User actual = sut.selectOneUser("NoData@sample.com");
+		assertThat(actual,is(nullValue()));
+	}
 
-	@Test
-	@Sql(statements= {
-			"DELETE FROM login_user",
-			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
-	})
-	void selectOneUserTest() throws Exception {
-		{
-			// setup
-			String id = "testdata@sample.com";
-			// execution
-			User actual = mapper.selectOneUser(id);
-			// assertion
-			assertThat(actual.getUserId(),is("testdata@sample.com"));
-			assertThat(actual.getPassword(),is("pass"));
-			assertThat(actual.getUserName(),is("testuser"));
-		}
+	@Test // selectOneUser -> Error
+	void Nullで指定検索するとNullを返すこと() throws Exception {
+		User actual = sut.selectOneUser(null);
+		assertThat(actual,is(nullValue()));
+	}
+
+	@Test // selectAllUser
+	void 登録済みデータを全件検索できること() throws Exception {
+		List<User> actual = sut.selectAllUser();
+		assertThat(actual.size(),is(1));
+	}
+
+	@Test // insertUser
+	void 未登録データを新規登録できること() throws Exception {
+		User expect = new User("testdata2@sample.com","pass","testuser2");
+		sut.insertUser(expect);
+		assertThat(sut.selectOneUser("testdata2@sample.com"),is(expect));
+	}
+
+	@Test // insertUser -> Error
+	void 登録済みのユーザーIDで新規登録するとDuplicateKeyExceptionを返すこと() throws Exception {
+		User expect = new User("testdata@sample.com","pass","testuser2");
+		assertThrows(DuplicateKeyException.class,() -> sut.insertUser(expect));
 	}
 
 	@Test
-	@Sql(statements= {
-			"DELETE FROM login_user",
-			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
-	})
-	void selectAllUserTest() throws Exception {
-		{
-			// execution
-			List<User> actual = mapper.selectAllUser();
-			// assertion
-			assertThat(actual.size(),is(1));
-			assertThat(actual.get(0).getUserId(),is("testdata@sample.com"));
-			assertThat(actual.get(0).getPassword(),is("pass"));
-			assertThat(actual.get(0).getUserName(),is("testuser"));
-		}
+	void Nullで登録しようとするとDataIntegrityViolationExceptionを返すこと() throws Exception {
+		assertThrows(DataIntegrityViolationException.class,() -> sut.insertUser(null));
 	}
 
-	@Test
-	@Sql(statements= {
-			"DELETE FROM login_user",
-			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
-	})
-	void updateUserTest() throws Exception {
-		{
-			// setup
-			User user = new User();
-			user.setUserId("testdata@sample.com");
-			user.setPassword("pass");
-			user.setUserName("user"); // change
-			// execution
-			mapper.updateUser(user);
-			User actual = jdbc.queryForObject("SELECT * FROM login_user WHERE user_id = :user_id",
-					new MapSqlParameterSource("user_id",user.getUserId()),
-					new BeanPropertyRowMapper<>(User.class));
-			// assertion
-			assertThat(actual.getUserName(),is("user"));
-		}
+
+	@Test // updateUser
+	void 登録済みデータを更新できること() throws Exception {
+		User expect = new User("testdata@sample.com","pass","testuser2");
+		sut.updateUser(expect);
+		User actual = sut.selectOneUser("testdata@sample.com");
+		assertThat(actual,is(expect));
 	}
 
-	@Test
-	@Sql(statements= {
-			"DELETE FROM login_user",
-			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
-	})
-	void deleteUserTest() throws Exception {
-		{
-			// setup
-			String id = "testdata@sample.com";
-			// execution
-			boolean actual = mapper.deleteUser(id);
-			// assertion
-			assertThat(actual,is(true));
-			assertThat(mapper.selectOneUser(id),is(nullValue()));
-		}
-	}
-
-	@Test
-	@Sql(statements={
-			"DELETE FROM login_user",
-			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
-	})
-	void searchUserTest() throws Exception {
-		{
-			String userId = "test";
-			String userName = "test";
-			List<User> actual = mapper.searchUser(userId,userName);
-			assertThat(actual.size(),is(1));
-			assertThat(actual.get(0).getUserId(),is("testdata@sample.com"));
-			assertThat(actual.get(0).getPassword(),is("pass"));
-			assertThat(actual.get(0).getUserName(),is("testuser"));
-		}
-	}
-
-	@Test
-	@Sql(statements={
-			"DELETE FROM login_user",
-			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
-	})
-	void searchUserIdTest() throws Exception {
-		{
-			String userId = "test";
-			List<User> actual = mapper.searchUserId(userId);
-			assertThat(actual.size(),is(1));
-			assertThat(actual.get(0).getUserId(),is("testdata@sample.com"));
-			assertThat(actual.get(0).getPassword(),is("pass"));
-			assertThat(actual.get(0).getUserName(),is("testuser"));
-		}
-	}
-
-	@Test
-	@Sql(statements={
-			"DELETE FROM login_user",
-			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
-	})
-	void searchUserNameTest() throws Exception {
-		{
-			String userName = "test";
-			List<User> actual = mapper.searchUserName(userName);
-			assertThat(actual.size(),is(1));
-			assertThat(actual.get(0).getUserId(),is("testdata@sample.com"));
-			assertThat(actual.get(0).getPassword(),is("pass"));
-			assertThat(actual.get(0).getUserName(),is("testuser"));
-		}
-	}
-
-	@Test
-	@Sql(statements= {
-			"DELETE FROM login_user",
-			"INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser')"
-	})
-	void deleteAllUserTest() throws Exception {
-		Boolean actual = mapper.deleteAllUser();
-		assertThat(actual,is(true));
-		assertThat(mapper.selectAllUser().size(),is(0));
+	@Test // deleteUser
+	void 登録済みデータを削除できること() throws Exception {
+		sut.deleteUser("testdata@sample.com");
+		User actual = sut.selectOneUser("testdata@sample.com");
+		assertThat(actual,is(nullValue()));
 	}
 
 }

@@ -40,11 +40,4 @@ public class UserService {
 		return mapper.searchUser(userId,userName);
 	}
 
-	public List<User> searchUserId(String userId) {
-		return mapper.searchUserId(userId);
-	}
-
-	public List<User> searchUserName(String userName) {
-		return mapper.searchUserName(userName);
-	}
 }
