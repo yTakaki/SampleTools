@@ -1,4 +1,5 @@
-INSERT INTO login_user VALUES ('testdata@sample.com','pass','testuser');
+INSERT INTO login_user
+VALUES ('testdata@sample.com','$2a$10$3/6hax2znwSz/7aJzPWp.uWmMeSdtNirt87v2gK8xJoP7c0zTTflu','testuser');
 
 INSERT INTO component VALUES ('00000001','TestA','testcomponentA',true,0);
 INSERT INTO component VALUES ('00000002','TestB','testcomponentB',true,0);
