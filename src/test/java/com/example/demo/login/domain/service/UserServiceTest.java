@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.demo.login.domain.model.User;
@@ -27,14 +28,20 @@ public class UserServiceTest {
 	private UserService sut;
 
 	@MockBean
+	private PasswordEncoder encoder;
+
+	@MockBean
 	private UserMapper mapper;
 
 	@Test
-	void insertUserが実行されること() throws Exception {
-		when(mapper.insertUser(any())).thenReturn(true);
-		sut.insertUser(any());
+	void passwordをエンコード処理してinsertUserが実行されること() throws Exception {
+		User user = new User("testdata@sample.com","password","testuser");
+		when(encoder.encode(user.getPassword())).thenReturn(anyString());
+		when(mapper.insertUser(user)).thenReturn(true);
+		sut.insertUser(user);
 
 		verify(mapper,times(1)).insertUser(any());
+		verify(encoder,times(1)).encode(anyString());
 	}
 
 	@Test
@@ -55,11 +62,14 @@ public class UserServiceTest {
 	}
 
 	@Test
-	void updateUserが実行されること() throws Exception {
-		when(mapper.updateUser(any())).thenReturn(true);
-		sut.updateUser(any());
+	void passwordをエンコード処理してupdateUserが実行されること() throws Exception {
+		User user = new User("testdata@sample.com","password","testuser2");
+		when(encoder.encode(user.getPassword())).thenReturn(anyString());
+		when(mapper.updateUser(user)).thenReturn(true);
+		sut.updateUser(user);
 
 		verify(mapper,times(1)).updateUser(any());
+		verify(encoder,times(1)).encode(anyString());
 	}
 
 	@Test
