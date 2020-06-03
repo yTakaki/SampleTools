@@ -1,14 +1,20 @@
 package com.example.demo.login.controller;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(controllers=LoginController.class)
+//@WebMvcTest(controllers = LoginController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@TestPropertySource(locations = "classpath:/test.properties")
 public class LoginControllerTest {
 
 	@Autowired
@@ -20,4 +26,14 @@ public class LoginControllerTest {
 		.andExpect(status().isOk())
 		.andExpect(view().name("login/login"));
 	}
+
+	@Test
+	//@WithMockUser
+	void ログイン画面にて適正なユーザー情報を入力してログインボタンを押すとログイン処理が実行されること() throws Exception {
+		mock.perform(formLogin("/login")
+				.user("testdata@sample.com").password("$2a$10$gKqjnlAOmrWyRf8D3C03R.Ge1fMUNxoD2CIhO1iMaiQMlAyDIb74G"))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(redirectedUrl("/home"));
+	}
 }
+
