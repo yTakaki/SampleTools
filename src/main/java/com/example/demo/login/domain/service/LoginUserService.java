@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,10 +16,11 @@ import com.example.demo.login.domain.repository.LoginUserMapper;
 public class LoginUserService {
 
 	@Autowired
-	LoginUserMapper mapper;
+	private LoginUserMapper mapper;
 
 	//rawDataのパスワードは渡すことができないので、暗号化
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    @Autowired
+	private PasswordEncoder encoder = new BCryptPasswordEncoder();
 
 	public boolean insertUser(LoginUser user) {
 		user.setPassword(encoder.encode(user.getPassword()));
