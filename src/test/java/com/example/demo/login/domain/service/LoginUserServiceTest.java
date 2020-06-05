@@ -12,11 +12,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import com.example.demo.login.domain.model.User;
-import com.example.demo.login.domain.repository.UserMapper;
+import com.example.demo.login.domain.model.LoginUser;
+import com.example.demo.login.domain.repository.LoginUserMapper;
 
-@SpringJUnitConfig(classes = UserServiceTest.Config.class)
-public class UserServiceTest {
+@SpringJUnitConfig(classes = LoginUserServiceTest.Config.class)
+public class LoginUserServiceTest {
 
 	@ComponentScan({
 		"com.example.demo.login.domain.service"
@@ -25,17 +25,17 @@ public class UserServiceTest {
 	}
 
 	@Autowired
-	private UserService sut;
+	private LoginUserService sut;
 
 	@MockBean
 	private PasswordEncoder encoder;
 
 	@MockBean
-	private UserMapper mapper;
+	private LoginUserMapper mapper;
 
 	@Test
 	void passwordをエンコード処理してinsertUserが実行されること() throws Exception {
-		User user = new User("testdata@sample.com","password","testuser");
+		LoginUser user = new LoginUser("testdata@sample.com","password","testuser");
 		when(encoder.encode(user.getPassword())).thenReturn(anyString());
 		when(mapper.insertUser(user)).thenReturn(true);
 		sut.insertUser(user);
@@ -54,7 +54,7 @@ public class UserServiceTest {
 
 	@Test
 	void selectAllUserが実行されること() throws Exception {
-		User user = new User("testdata@sample.com","pass","testuser");
+		LoginUser user = new LoginUser("testdata@sample.com","pass","testuser");
 		when(mapper.selectAllUser()).thenReturn(List.of(user));
 		sut.selectAllUser();
 
@@ -63,7 +63,7 @@ public class UserServiceTest {
 
 	@Test
 	void passwordをエンコード処理してupdateUserが実行されること() throws Exception {
-		User user = new User("testdata@sample.com","password","testuser2");
+		LoginUser user = new LoginUser("testdata@sample.com","password","testuser2");
 		when(encoder.encode(user.getPassword())).thenReturn(anyString());
 		when(mapper.updateUser(user)).thenReturn(true);
 		sut.updateUser(user);

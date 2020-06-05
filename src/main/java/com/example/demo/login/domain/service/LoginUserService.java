@@ -7,33 +7,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.login.domain.model.User;
-import com.example.demo.login.domain.repository.UserMapper;
+import com.example.demo.login.domain.model.LoginUser;
+import com.example.demo.login.domain.repository.LoginUserMapper;
 
 @Transactional
 @Service
-public class UserService {
+public class LoginUserService {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
 	@Autowired
-	UserMapper mapper;
+	LoginUserMapper mapper;
 
-	public boolean insertUser(User user) {
+	public boolean insertUser(LoginUser user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return mapper.insertUser(user);
 	}
 
-	public User selectOneUser(String userId) {
+	public LoginUser selectOneUser(String userId) {
 		return mapper.selectOneUser(userId);
 	}
 
-	public List<User> selectAllUser() {
+	public List<LoginUser> selectAllUser() {
 		return mapper.selectAllUser();
 	}
 
-	public boolean updateUser(User user) {
+	public boolean updateUser(LoginUser user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return mapper.updateUser(user);
 	}
@@ -42,7 +42,7 @@ public class UserService {
 		return mapper.deleteUser(userId);
 	}
 
-	public List<User> searchUser(String userId,String userName) {
+	public List<LoginUser> searchUser(String userId,String userName) {
 		return mapper.searchUser(userId,userName);
 	}
 

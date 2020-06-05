@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.login.domain.model.SignupForm;
-import com.example.demo.login.domain.model.User;
-import com.example.demo.login.domain.service.UserService;
+import com.example.demo.login.domain.model.LoginUser;
+import com.example.demo.login.domain.service.LoginUserService;
 
 @Controller
 public class SignupController {
 
 	@Autowired
-	private UserService service;
+	private LoginUserService service;
 
 	@GetMapping("/signup")
 	public String getSignup(@ModelAttribute SignupForm form,Model model) {
@@ -32,7 +32,7 @@ public class SignupController {
 		}
 		System.out.println(form);
 
-		User user = new User(form.getUserId(),form.getPassword(),form.getUserName());
+		LoginUser user = new LoginUser(form.getUserId(),form.getPassword(),form.getUserName());
 		boolean result = service.insertUser(user);
 		if (result) {
 			System.out.println("insert success");

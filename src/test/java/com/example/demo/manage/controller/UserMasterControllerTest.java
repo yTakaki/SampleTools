@@ -14,8 +14,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.login.domain.model.User;
-import com.example.demo.login.domain.service.UserService;
+import com.example.demo.login.domain.model.LoginUser;
+import com.example.demo.login.domain.service.LoginUserService;
 
 @WebMvcTest(controllers = UserMasterController.class)
 public class UserMasterControllerTest {
@@ -24,7 +24,7 @@ public class UserMasterControllerTest {
 	private MockMvc mock;
 
 	@MockBean
-	private UserService service;
+	private LoginUserService service;
 
 	@Test // getUserMaster
 	@WithMockUser
@@ -70,7 +70,7 @@ public class UserMasterControllerTest {
 	@Test // getUpdateUser
 	@WithMockUser
 	void ユーザー編集ページへのリクエストに対して正常に画面が返されること() throws Exception {
-		when(service.selectOneUser(anyString())).thenReturn(new User("testdata@sample.com","pass","testuser"));
+		when(service.selectOneUser(anyString())).thenReturn(new LoginUser("testdata@sample.com","pass","testuser"));
 		mock.perform(get("/updateUser/{id}","testdata@sample.com"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("login/homeLayout"))
@@ -82,7 +82,7 @@ public class UserMasterControllerTest {
 	@Test // postUpdateUser
 	@WithMockUser
 	void ユーザー編集ページのユーザー編集フォームに適正に入力して更新ボタンを押すと更新処理が実行されて正常に画面が返されること() throws Exception {
-		when(service.selectOneUser(anyString())).thenReturn(new User("testdata@sample.com","pass","testuser"));
+		when(service.selectOneUser(anyString())).thenReturn(new LoginUser("testdata@sample.com","pass","testuser"));
 		when(service.updateUser(any())).thenReturn(true);
 		mock.perform(post("/updateUser")
 				.param("userId", "testdata@sample.com").param("password", "pass").param("userName","testuser2"))
@@ -97,7 +97,7 @@ public class UserMasterControllerTest {
 	@Test // postUpdateUser -> Error
 	@WithMockUser
 	void ユーザー編集ページのユーザー編集フォームにてユーザー名がNullのとき更新ボタンを押すと例外情報が画面に返されること() throws Exception {
-		when(service.selectOneUser(anyString())).thenReturn(new User("testdata@sample.com","pass","testuser"));
+		when(service.selectOneUser(anyString())).thenReturn(new LoginUser("testdata@sample.com","pass","testuser"));
 		when(service.updateUser(any())).thenReturn(true);
 		mock.perform(post("/updateUser")
 				.param("userId", "testdata@sample.com").param("password", "pass"))
@@ -109,7 +109,7 @@ public class UserMasterControllerTest {
 	@Test // postUpdateUser -> Error
 	@WithMockUser
 	void ユーザー編集ページのユーザー編集フォームにてユーザー名が空文字のとき更新ボタンを押すと例外情報が画面に返されること() throws Exception {
-		when(service.selectOneUser(anyString())).thenReturn(new User("testdata@sample.com","pass","testuser"));
+		when(service.selectOneUser(anyString())).thenReturn(new LoginUser("testdata@sample.com","pass","testuser"));
 		when(service.updateUser(any())).thenReturn(true);
 		mock.perform(post("/updateUser")
 				.param("userId", "testdata@sample.com").param("password", "pass").param("userName",""))
@@ -121,7 +121,7 @@ public class UserMasterControllerTest {
 	@Test // postUpdateUser -> Error
 	@WithMockUser
 	void ユーザー編集ページのユーザー編集フォームにてユーザー名が空白のとき更新ボタンを押すと例外情報が画面に返されること() throws Exception {
-		when(service.selectOneUser(anyString())).thenReturn(new User("testdata@sample.com","pass","testuser"));
+		when(service.selectOneUser(anyString())).thenReturn(new LoginUser("testdata@sample.com","pass","testuser"));
 		when(service.updateUser(any())).thenReturn(true);
 		mock.perform(post("/updateUser")
 				.param("userId", "testdata@sample.com").param("password", "pass").param("userName"," "))
@@ -133,7 +133,7 @@ public class UserMasterControllerTest {
 	@Test // postUpdateUser -> Error
 	@WithMockUser
 	void ユーザー編集ページのユーザー編集フォームにてユーザー名が21文字のとき更新ボタンを押すと例外情報が画面に返されること() throws Exception {
-		when(service.selectOneUser(anyString())).thenReturn(new User("testdata@sample.com","pass","testuser"));
+		when(service.selectOneUser(anyString())).thenReturn(new LoginUser("testdata@sample.com","pass","testuser"));
 		when(service.updateUser(any())).thenReturn(true);
 		mock.perform(post("/updateUser").param("userId", "testdata@sample.com")
 				.param("password", "pass").param("userName","abcdefghijklmnopqrstu"))

@@ -12,7 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.login.domain.service.UserService;
+import com.example.demo.login.domain.service.LoginUserService;
 
 @WebMvcTest(controllers = SignupController.class)
 public class SignupControllerTest {
@@ -24,7 +24,7 @@ public class SignupControllerTest {
 	private DataSource data;
 
 	@MockBean
-	private UserService service;
+	private LoginUserService service;
 
 	@Test
 	void ユーザー登録ページへのリクエストに対して正常に画面が返されること() throws Exception {

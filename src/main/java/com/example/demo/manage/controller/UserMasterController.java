@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.login.domain.model.User;
-import com.example.demo.login.domain.service.UserService;
+import com.example.demo.login.domain.model.LoginUser;
+import com.example.demo.login.domain.service.LoginUserService;
 import com.example.demo.manage.domain.model.UpdateUserForm;
 import com.example.demo.manage.domain.model.UserSearchForm;
 
@@ -21,7 +21,7 @@ import com.example.demo.manage.domain.model.UserSearchForm;
 public class UserMasterController {
 
 	@Autowired
-	private UserService service;
+	private LoginUserService service;
 
 	@GetMapping("/userMaster")
 	public String getUserMaster(@ModelAttribute UserSearchForm form,Model model) {
@@ -34,7 +34,7 @@ public class UserMasterController {
 		if (bind.hasErrors()) {
 			return getUserMaster(form,model);
 		}
-		List<User> userList = service.searchUser(form.getUserId(), form.getUserName());
+		List<LoginUser> userList = service.searchUser(form.getUserId(), form.getUserName());
 		model.addAttribute("userList", userList);
 		model.addAttribute("result", "合計で"+userList.size()+"件のユーザー情報を取得しました。");
 		model.addAttribute("contents", "manage/userMaster :: userMaster_contents");
@@ -47,7 +47,7 @@ public class UserMasterController {
 		System.out.println("userId="+userId);
 		model.addAttribute("contents", "manage/updateUser :: updateUser_contents");
 		if (userId!=null && userId.length()>0) {
-			User user = service.selectOneUser(userId);
+			LoginUser user = service.selectOneUser(userId);
 			form.setUserId(user.getUserId());
 			form.setUserName(user.getUserName());
 			model.addAttribute("updateUserForm", form);
@@ -64,7 +64,7 @@ public class UserMasterController {
 		model.addAttribute("contents", "manage/userMaster :: userMaster_contents");
 		model.addAttribute("userSearchForm",new UserSearchForm());
 
-		User user = service.selectOneUser(form.getUserId());
+		LoginUser user = service.selectOneUser(form.getUserId());
 		user.setUserName(form.getUserName());
 		boolean result = service.updateUser(user);
 		if (result==true) {
