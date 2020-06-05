@@ -39,7 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         //UserDetailsはインタフェースなのでUserクラスのコンストラクタで生成したユーザオブジェクトをキャスト(パスワードは登録時に暗号化済み）
         UserDetails userDetails =
-        		(UserDetails)new User(user.getUserName(),user.getPassword(),grantList);
+        		(UserDetails)new User(user.getUserId(),user.getPassword(),grantList);
 
         return userDetails;
 	}
