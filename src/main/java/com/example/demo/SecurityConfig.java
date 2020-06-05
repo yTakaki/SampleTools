@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.example.demo.login.domain.service.UserDetailsServiceImpl;
+
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -23,13 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	// データソース
 	@Autowired
-	private DataSource dataSource;
-
-	// ユーザーIDとパスワードを取得するSQL
-	private static final String USER_SQL = "SELECT user_id, password, true FROM login_user WHERE user_id = ?";
-	private static final String ROLE_SQL = "SELECT user_id, 'ROLE_USER' FROM login_user WHERE user_id = ?";
+	private UserDetailsServiceImpl service;
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -64,6 +59,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(service).passwordEncoder(passwordEncoder());
+	}
+
+}
+
+/* Spring 解体新書に記載のあった方法だと、上記の認証設定を下記に書き換える（テストコードはよくわからない）
+ *
+	// ユーザーIDとパスワードを取得するSQL
+	private static final String USER_SQL = "SELECT user_id, password, true FROM login_user WHERE user_id = ?";
+	private static final String ROLE_SQL = "SELECT user_id, 'ROLE_USER' FROM login_user WHERE user_id = ?";
+
+	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 		// ログイン処理時のユーザー情報をDBから取得
@@ -73,5 +81,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.authoritiesByUsernameQuery(ROLE_SQL)
 		.passwordEncoder(passwordEncoder());
 	}
-
-}
+*/
