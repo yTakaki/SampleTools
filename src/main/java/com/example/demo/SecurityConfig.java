@@ -64,21 +64,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 }
-
-/* Spring 解体新書に記載のあった方法だと、上記の認証設定を下記に書き換える（テストコードはよくわからない）
- *
-	// ユーザーIDとパスワードを取得するSQL
-	private static final String USER_SQL = "SELECT user_id, password, true FROM login_user WHERE user_id = ?";
-	private static final String ROLE_SQL = "SELECT user_id, 'ROLE_USER' FROM login_user WHERE user_id = ?";
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-		// ログイン処理時のユーザー情報をDBから取得
-		auth.jdbcAuthentication()
-		.dataSource(dataSource)
-		.usersByUsernameQuery(USER_SQL)
-		.authoritiesByUsernameQuery(ROLE_SQL)
-		.passwordEncoder(passwordEncoder());
-	}
-*/

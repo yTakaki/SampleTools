@@ -34,7 +34,6 @@ public class LoginUserService {
 	}
 
 	public boolean updateUser(LoginUser user) {
-		user.setPassword(encoder.encode(user.getPassword()));
 		return mapper.updateUser(user);
 	}
 

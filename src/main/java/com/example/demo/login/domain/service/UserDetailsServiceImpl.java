@@ -37,8 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         GrantedAuthority authority = new SimpleGrantedAuthority("USER");
         grantList.add(authority);
 
-
-        //UserDetailsはインタフェースなのでUserクラスのコンストラクタで生成したユーザオブジェクトをキャスト
+        //UserDetailsはインタフェースなのでUserクラスのコンストラクタで生成したユーザオブジェクトをキャスト(パスワードは登録時に暗号化済み）
         UserDetails userDetails =
         		(UserDetails)new User(user.getUserName(),user.getPassword(),grantList);
 
