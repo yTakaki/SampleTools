@@ -1,10 +1,10 @@
 package com.example.demo.login.controller;
 
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.demo.login.domain.service.LoginUserService;
+import com.example.demo.login.domain.service.UserDetailsServiceImpl;
 
 @WebMvcTest(controllers = SignupController.class)
 public class SignupControllerTest {
@@ -21,14 +22,13 @@ public class SignupControllerTest {
 	private MockMvc mock;
 
 	@MockBean
-	private DataSource data;
+	private UserDetailsServiceImpl user;
 
 	@MockBean
 	private LoginUserService service;
 
 	@Test
 	void ユーザー登録ページへのリクエストに対して正常に画面が返されること() throws Exception {
-
 		mock.perform(get("/signup"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("login/signup"));
@@ -41,6 +41,8 @@ public class SignupControllerTest {
 		.andExpect(status().is3xxRedirection())
 		.andExpect(model().hasNoErrors())
 		.andExpect(view().name("redirect:/login"));
+
+		verify(service,times(1)).insertUser(any());
 	}
 
 	@Test
