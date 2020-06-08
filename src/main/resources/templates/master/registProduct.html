@@ -69,17 +69,68 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID-1</label>
 					<div class="col-sm-7 row">
-						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{comp1}"
-						th:text="${compResult}">
-						<p class="form-control-sm">　(完全一致検索)　</p>
-						<a class="btn btn-primary btn-sm form-control-sm" th:href="@{/productSearch/comp1}"
-						target="_blank" rel="noopener">商品ID検索</a>
+						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{comp1}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID-2</label>
+					<div class="col-sm-7 row">
+						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{comp2}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID-3</label>
+					<div class="col-sm-7 row">
+						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{comp3}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID-4</label>
+					<div class="col-sm-7 row">
+						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{comp4}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID-5</label>
+					<div class="col-sm-7 row">
+						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{comp5}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID-6</label>
+					<div class="col-sm-7 row">
+						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{comp6}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID-7</label>
+					<div class="col-sm-7 row">
+						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{comp7}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID-8</label>
+					<div class="col-sm-7 row">
+						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{comp8}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID-9</label>
+					<div class="col-sm-7 row">
+						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{comp9}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID-10</label>
+					<div class="col-sm-7 row">
+						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{comp10}">
 					</div>
 				</div>
 				<button class="btn btn-primary" type="submit">登録</button>
 				<a class="btn btn-secondary" th:href="@{/productMaster}">戻る</a>
+				<a class="btn btn-success" th:href="@{/productMaster}" target="_blank" rel="noopener">商品検索</a>
 			</form>
-			<label class="text-info" th:text="${result}">結果表示</label>
+			<label class="text-danger" th:text="${result}">結果表示</label>
 		</div>
 	</div>
 </body>

@@ -5,16 +5,17 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <meta charset="UTF-8">
 </head>
 <body>
-	<div th:fragment="registProduct_contents" class="overflow-auto">
+	<div th:fragment="productDetail_contents" class="overflow-auto">
 		<div class="page-header">
-			<h1>商品登録画面</h1>
+			<h1>商品編集画面</h1>
 		</div>
 		<div class="col-sm-12">
-			<form th:action="@{/registProduct}" method="post" th:object="${registProductForm}">
+			<form th:action="@{/productDetail}" method="post" th:object="${registProductForm}">
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label col-form-label-sm text-right">商品ID</label>
 					<div class="col-sm-3" th:classappend="${#fields.hasErrors('productId')}?'has-error'">
-						<input type="text" class="form-control form-control-sm" th:field="*{productId}">
+						<input type="text" class="form-control form-control-sm" th:field="*{productId}"
+						readonly="readonly">
 						<ul>
 							<li th:each="error:${#fields.detailedErrors('productId')}">
 								<span class="text-danger" th:if="${#fields.hasErrors('productId')}"
@@ -126,7 +127,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{comp10}">
 					</div>
 				</div>
-				<button class="btn btn-primary" type="submit">登録</button>
+				<button class="btn btn-primary" type="submit" name="update">登録</button>
+				<button class="btn btn-danger" type="submit" name="delete">削除</button>
 				<a class="btn btn-secondary" th:href="@{/productMaster}">戻る</a>
 				<a class="btn btn-success" th:href="@{/productMaster}" target="_blank" rel="noopener">商品検索</a>
 			</form>

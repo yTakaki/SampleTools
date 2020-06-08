@@ -34,7 +34,8 @@ public class ProductService {
 		return mapper.deleteProduct(productId);
 	}
 
-	public List<Product> searchProduct(String id,String cd,String name,boolean flag1,boolean flag2,int status) {
-		return mapper.searchProduct(id, cd, name, flag1, flag2, status);
+	public List<Product> searchProduct(String id,String cd,String name,
+			boolean flag1,boolean flag2,int status,String compId) {
+		return mapper.searchProduct(id, cd, name, flag1, flag2, status, compId);
 	}
 }

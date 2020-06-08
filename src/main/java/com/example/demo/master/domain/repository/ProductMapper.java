@@ -21,7 +21,7 @@ public interface ProductMapper {
 	public boolean deleteProduct(String productId);
 
 	public List<Product> searchProduct(
-			@Param("id")String id,@Param("cd")String cd,@Param("name")String name,
-			@Param("flag1")boolean flag, @Param("flag2")boolean flag2, @Param("status")int status);
+			@Param("id")String id,@Param("cd")String cd,@Param("name")String name, @Param("flag1")boolean flag,
+			@Param("flag2")boolean flag2, @Param("status")int status, @Param("compId")String compId);
 
 }

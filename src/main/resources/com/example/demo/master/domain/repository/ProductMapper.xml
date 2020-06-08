@@ -63,6 +63,18 @@
 	AND composite_flag = #{flag1}
 	AND food_flag = #{flag2}
 	AND product_status = #{status}
+	AND (comp1 = #{compId}
+	OR comp2 = #{compId}
+	OR comp3 = #{compId}
+	OR comp4 = #{compId}
+	OR comp5 = #{compId}
+	OR comp6 = #{compId}
+	OR comp7 = #{compId}
+	OR comp8 = #{compId}
+	OR comp9 = #{compId}
+	OR comp10 = #{compId}
+	)
+
 	</select>
 
 </mapper>
