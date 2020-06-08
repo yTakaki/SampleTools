@@ -24,7 +24,8 @@ public class LoginUserMapperTest {
 
 	@Test // selectOneUser
 	void 登録済みデータを指定検索できること() throws Exception {
-		LoginUser expect = new LoginUser("testdata@sample.com","pass","testuser");
+		LoginUser expect = new LoginUser("testdata@sample.com",
+				"$2a$10$cPIC6VUsJfeSmWDG86k.6.lgMsQK.FMN.FWNLffcOxIPu.HTGv0XK","testuser");
 		LoginUser actual = sut.selectOneUser("testdata@sample.com");
 		assertThat(actual,is(expect));
 	}

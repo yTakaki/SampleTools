@@ -8,14 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 //@WebMvcTest(controllers = LoginController.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestPropertySource("classpath:test.properties")
+@TestPropertySource(locations = "classpath:test.properties")
 public class LoginControllerTest {
 
 	@Autowired
@@ -33,9 +32,10 @@ public class LoginControllerTest {
 
 	// loginTestをしない場合は、@WebMvcTestでOK
 	@Test
-	@WithMockUser
 	void loginTest() throws Exception {
-		mock.perform(formLogin("/login")) // 現状、ユーザー情報が誤りという扱い
+		mock.perform(formLogin("/login")
+				.user("testdata@sample.com")
+				.password("$2a$10$cPIC6VUsJfeSmWDG86k.6.lgMsQK.FMN.FWNLffcOxIPu.HTGv0XK")) // 現状、ユーザー情報が誤りという扱い
 		.andExpect(status().isFound())
 		.andExpect(redirectedUrl("/home"));
 	}
