@@ -4,20 +4,13 @@ CREATE TABLE IF NOT EXISTS login_user (
 	,user_name VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS component(
-	component_id VARCHAR(8) PRIMARY KEY
-	,component_cd VARCHAR(20) NOT NULL
-	,component_name VARCHAR(50) NOT NULL
-	,food_flag BOOLEAN DEFAULT false
-	,component_status INT DEFAULT 0
-);
-
-CREATE TABLE IF NOT EXISTS item(
-	item_id VARCHAR(8) PRIMARY KEY
-	,item_cd VARCHAR(20) NOT NULL
-	,item_name VARCHAR(50) NOT NULL
+CREATE TABLE IF NOT EXISTS product(
+	product_id VARCHAR(8) PRIMARY KEY
+	,product_cd VARCHAR(20) NOT NULL
+	,product_name VARCHAR(50) NOT NULL
 	,composite_flag BOOLEAN DEFAULT false
-	,item_status INT DEFAULT 0
+	,food_flag BOOLEAN DEFAULT false
+	,product_status INT DEFAULT 0
 	,comp1 VARCHAR(8)
 	,comp2 VARCHAR(8)
 	,comp3 VARCHAR(8)

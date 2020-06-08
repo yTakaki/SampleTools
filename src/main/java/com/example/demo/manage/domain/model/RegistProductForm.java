@@ -7,25 +7,28 @@ import javax.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class RegistItemForm {
+public class RegistProductForm {
 
 	@NotBlank
 	@Size(max=8)
-	private String itemId;
+	private String productId;
 
 	@NotBlank
 	@Size(max=20)
-	private String itemCd;
+	private String productCd;
 
 	@NotBlank
 	@Size(max=50)
-	private String itemName;
+	private String productName;
 
 	@NotNull
 	private boolean compositeFlag;
 
 	@NotNull
-	private int itemStatus;
+	private boolean foodFlag;
+
+	@NotNull
+	private int productStatus;
 
 	private String comp1;
 

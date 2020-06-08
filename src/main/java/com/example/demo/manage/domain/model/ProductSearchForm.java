@@ -5,20 +5,22 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class ItemSearchForm {
+public class ProductSearchForm {
 
 	@NotNull
-	private String itemId;
+	private String productId;
 
 	@NotNull
-	private String itemCd;
+	private String productCd;
 
 	@NotNull
-	private String itemName;
+	private String productName;
 
 	private boolean compositeFlag;
 
-	private int itemStatus;
+	private boolean foodFlag;
+
+	private int productStatus;
 
 	private String compId;
 }
