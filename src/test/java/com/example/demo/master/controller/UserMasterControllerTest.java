@@ -1,4 +1,4 @@
-package com.example.demo.manage.controller;
+package com.example.demo.master.controller;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.*;
