@@ -1,4 +1,4 @@
-package com.example.demo.manage.controller;
+package com.example.demo.master.controller;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.login.domain.model.LoginUser;
 import com.example.demo.login.domain.service.LoginUserService;
-import com.example.demo.manage.domain.model.UpdateUserForm;
-import com.example.demo.manage.domain.model.UserSearchForm;
+import com.example.demo.master.domain.model.UpdateUserForm;
+import com.example.demo.master.domain.model.UserSearchForm;
 
 @Controller
 public class UserMasterController {
@@ -25,7 +25,7 @@ public class UserMasterController {
 
 	@GetMapping("/userMaster")
 	public String getUserMaster(@ModelAttribute UserSearchForm form,Model model) {
-		model.addAttribute("contents","manage/userMaster :: userMaster_contents");
+		model.addAttribute("contents","master/userMaster :: userMaster_contents");
 		return "login/homeLayout";
 	}
 
@@ -37,7 +37,7 @@ public class UserMasterController {
 		List<LoginUser> userList = service.searchUser(form.getUserId(), form.getUserName());
 		model.addAttribute("userList", userList);
 		model.addAttribute("result", "合計で"+userList.size()+"件のユーザー情報を取得しました。");
-		model.addAttribute("contents", "manage/userMaster :: userMaster_contents");
+		model.addAttribute("contents", "master/userMaster :: userMaster_contents");
 		return "login/homeLayout";
 	}
 
@@ -45,7 +45,7 @@ public class UserMasterController {
 	public String getUpdateUser(@ModelAttribute UpdateUserForm form,Model model,
 			@PathVariable("id") String userId) {
 		System.out.println("userId="+userId);
-		model.addAttribute("contents", "manage/updateUser :: updateUser_contents");
+		model.addAttribute("contents", "master/updateUser :: updateUser_contents");
 		if (userId!=null && userId.length()>0) {
 			LoginUser user = service.selectOneUser(userId);
 			form.setUserId(user.getUserId());
@@ -61,7 +61,7 @@ public class UserMasterController {
 			return getUpdateUser(form,model,form.getUserId());
 		}
 		System.out.println(form);
-		model.addAttribute("contents", "manage/userMaster :: userMaster_contents");
+		model.addAttribute("contents", "master/userMaster :: userMaster_contents");
 		model.addAttribute("userSearchForm",new UserSearchForm());
 
 		LoginUser user = service.selectOneUser(form.getUserId());
@@ -80,7 +80,7 @@ public class UserMasterController {
 	@PostMapping("/deleteUser/{id:.+}")
 	public String postDeleteUser(Model model,@PathVariable("id") String userId) {
 		System.out.println("userId="+userId);
-		model.addAttribute("contents","manage/userMaster :: userMaster_contents");
+		model.addAttribute("contents","master/userMaster :: userMaster_contents");
 		model.addAttribute("userSearchForm",new UserSearchForm());
 
 		boolean result = service.deleteUser(userId);

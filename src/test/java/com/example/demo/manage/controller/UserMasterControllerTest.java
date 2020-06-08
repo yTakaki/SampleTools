@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.demo.login.domain.model.LoginUser;
 import com.example.demo.login.domain.service.LoginUserService;
+import com.example.demo.master.controller.UserMasterController;
 
 @WebMvcTest(controllers = UserMasterController.class)
 public class UserMasterControllerTest {

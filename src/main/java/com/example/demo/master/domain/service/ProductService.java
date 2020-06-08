@@ -1,12 +1,12 @@
-package com.example.demo.manage.domain.service;
+package com.example.demo.master.domain.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.manage.domain.model.Product;
-import com.example.demo.manage.domain.repository.ProductMapper;
+import com.example.demo.master.domain.model.Product;
+import com.example.demo.master.domain.repository.ProductMapper;
 
 @Service
 public class ProductService {

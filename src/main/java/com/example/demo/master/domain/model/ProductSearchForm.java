@@ -1,4 +1,4 @@
-package com.example.demo.manage.domain.model;
+package com.example.demo.master.domain.model;
 
 import javax.validation.constraints.NotNull;
 

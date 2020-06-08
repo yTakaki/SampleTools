@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.demo.manage.domain.repository.ProductMapper">
+<mapper namespace="com.example.demo.master.domain.repository.ProductMapper">
 
-	<resultMap type="com.example.demo.manage.domain.model.Product" id="product">
+	<resultMap type="com.example.demo.master.domain.model.Product" id="product">
 		<id column="product_id" property="productId"></id>
 		<result column="product_cd" property="productCd"></result>
 		<result column="product_name" property="productName"></result>
@@ -22,7 +22,7 @@
 		<result column="comp10" property="comp10"></result>
 	</resultMap>
 
-	<insert id="insertProduct" parameterType="com.example.demo.manage.domain.model.Product">
+	<insert id="insertProduct" parameterType="com.example.demo.master.domain.model.Product">
 	INSERT INTO product
 	VALUES (#{productId},#{productCd},#{productName},#{compositeFlag},#{foodFlag},#{productStatus},
 	#{comp1},#{comp2},#{comp3},#{comp4},#{comp5},#{comp6},#{comp7},#{comp8},#{comp9},#{comp10})
@@ -39,7 +39,7 @@
 	FROM product
 	</select>
 
-	<update id="updateProduct" parameterType="com.example.demo.manage.domain.model.Product">
+	<update id="updateProduct" parameterType="com.example.demo.master.domain.model.Product">
 	UPDATE product
 	SET product_cd = #{productCd}, product_name = #{productName},
 	composite_flag = #{compositeFlag}, food_flag = #{foodFlag}, product_status = #{productStatus},

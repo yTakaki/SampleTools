@@ -1,11 +1,11 @@
-package com.example.demo.manage.domain.repository;
+package com.example.demo.master.domain.repository;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.example.demo.manage.domain.model.Product;
+import com.example.demo.master.domain.model.Product;
 
 @Mapper
 public interface ProductMapper {

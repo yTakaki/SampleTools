@@ -1,6 +1,7 @@
-package com.example.demo.manage.controller;
+package com.example.demo.master.controller;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.manage.domain.model.Product;
-import com.example.demo.manage.domain.model.ProductSearchForm;
-import com.example.demo.manage.domain.model.RegistProductForm;
-import com.example.demo.manage.domain.service.ProductService;
+import com.example.demo.master.domain.model.Product;
+import com.example.demo.master.domain.model.ProductSearchForm;
+import com.example.demo.master.domain.model.RegistProductForm;
+import com.example.demo.master.domain.service.ProductService;
 
 @Controller
 public class ProductMasterController {
@@ -60,7 +62,7 @@ public class ProductMasterController {
 		radioProductStatus = initRadioProductStatus();
 		model.addAttribute("radioProductStatus",radioProductStatus);
 		// configuration view
-		model.addAttribute("contents","manage/productMaster :: productMaster_contents");
+		model.addAttribute("contents","master/productMaster :: productMaster_contents");
 		return "login/homeLayout";
 	}
 
@@ -74,7 +76,7 @@ public class ProductMasterController {
 		radioProductStatus = initRadioProductStatus();
 		model.addAttribute("radioProductStatus",radioProductStatus);
 		// configuration view
-		model.addAttribute("contents","manage/registProduct :: registProduct_contents");
+		model.addAttribute("contents","master/registProduct :: registProduct_contents");
 		return "login/homeLayout";
 	}
 
@@ -107,15 +109,72 @@ public class ProductMasterController {
 			}
 
 			// configuration view
-			model.addAttribute("contents","manage/productMaster :: productMaster_contents");
+			model.addAttribute("contents","master/productMaster :: productMaster_contents");
 			model.addAttribute("productSearchForm",new ProductSearchForm());
 
 		} catch (DuplicateKeyException e) {
 			model.addAttribute("result","入力された商品IDはすでに登録されています。");
-			model.addAttribute("contents","manage/registProduct :: registProduct_contents");
+			model.addAttribute("contents","master/registProduct :: registProduct_contents");
 		}
 
 		return "login/homeLayout";
+	}
+
+	@PostMapping(value="/productSearch",name="search")
+	public String postProductSearch(@ModelAttribute @Validated ProductSearchForm form,BindingResult bind,Model model) {
+		if (bind.hasErrors()) {
+			getProductMaster(form,model);
+		}
+		// initialization
+		radioCompositeFlag = initRadioCompositeFlag();
+		model.addAttribute("radioCompositeFlag",radioCompositeFlag);
+		radioFoodFlag = initRadioFoodFlag();
+		model.addAttribute("radioFoodFlag",radioFoodFlag);
+		radioProductStatus = initRadioProductStatus();
+		model.addAttribute("radioProductStatus",radioProductStatus);
+		// execution
+
+		// configuration view
+		model.addAttribute("contents","master/productMaster :: productMaster_contents");
+		return "login/homeLayout";
+	}
+
+	@PostMapping(value="/productSearch",name="selectall")
+	public String postProductAllSearch
+	(@ModelAttribute @Validated ProductSearchForm form,BindingResult bind,Model model) {
+		if (bind.hasErrors()) {
+			getProductMaster(form,model);
+		}
+		// initialization
+		radioCompositeFlag = initRadioCompositeFlag();
+		model.addAttribute("radioCompositeFlag",radioCompositeFlag);
+		radioFoodFlag = initRadioFoodFlag();
+		model.addAttribute("radioFoodFlag",radioFoodFlag);
+		radioProductStatus = initRadioProductStatus();
+		model.addAttribute("radioProductStatus",radioProductStatus);
+		// execution
+		List<Product> productList = service.selectAllProduct();
+		model.addAttribute("productList",productList);
+		model.addAttribute("result","合計："+productList.size()+"件の商品データを抽出しました。");
+		// configuration view
+		model.addAttribute("contents","master/productMaster :: productMaster_contents");
+		return "login/homeLayout";
+	}
+
+	@GetMapping("/productDetail/{id}")
+	public String getProductDetail(Model model,@PathVariable("id") String productId) {
+		// initialization
+				radioCompositeFlag = initRadioCompositeFlag();
+				model.addAttribute("radioCompositeFlag",radioCompositeFlag);
+				radioFoodFlag = initRadioFoodFlag();
+				model.addAttribute("radioFoodFlag",radioFoodFlag);
+				radioProductStatus = initRadioProductStatus();
+				model.addAttribute("radioProductStatus",radioProductStatus);
+				// execution
+				Product product = service.selectOneProduct(productId);
+				// configuration view
+				model.addAttribute("contents","master/productMaster :: productMaster_contents");
+				return "login/homeLayout";
 	}
 
 }
