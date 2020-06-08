@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS product(
 	,composite_flag BOOLEAN DEFAULT false
 	,food_flag BOOLEAN DEFAULT false
 	,product_status INT DEFAULT 0
+	,permit_period INT DEFAULT 0
 	,comp1 VARCHAR(8)
 	,comp2 VARCHAR(8)
 	,comp3 VARCHAR(8)

@@ -79,6 +79,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					<th>構成区分</th>
 					<th>食品フラグ</th>
 					<th>取扱状態</th>
+					<th>使用許可日数</th>
 					<th></th>
 				</tr>
 				<tr th:each="product:${productList}">
@@ -89,6 +90,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					<td th:text="${product.foodFlag}?'食品':'食品以外'"></td>
 					<td th:text="(${product.productStatus}==0)?'取扱い可能':
 					((${product.productStatus}==1)?'終売予定':'終了')"></td>
+					<td th:text="${product.permitPeriod}"></td>
 					<td>
 						<a class="btn btn-primary btn-sm" th:href="@{'/productDetail/'+${product.productId}}">編集</a>
 					</td>

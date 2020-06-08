@@ -100,7 +100,7 @@ public class ProductMasterController {
 		// execution
 		try {
 			Product product = new Product(form.getProductId(),form.getProductCd(),form.getProductName()
-				,form.isCompositeFlag(),form.isFoodFlag(),form.getProductStatus()
+				,form.isCompositeFlag(),form.isFoodFlag(),form.getProductStatus(),form.getPermitPeriod()
 				,form.getComp1(),form.getComp2(),form.getComp3(),form.getComp4()
 				,form.getComp5(),form.getComp6(),form.getComp7(),form.getComp8()
 				,form.getComp9(),form.getComp10());
@@ -183,8 +183,9 @@ public class ProductMasterController {
 		// execution
 		Product p = service.selectOneProduct(productId);
 		RegistProductForm form = new RegistProductForm(p.getProductId(),p.getProductCd(),p.getProductName(),
-				p.isCompositeFlag(),p.isFoodFlag(),p.getProductStatus(),p.getComp1(),p.getComp2(),p.getComp3(),
-				p.getComp4(),p.getComp5(),p.getComp6(),p.getComp7(),p.getComp8(),p.getComp9(),p.getComp10());
+				p.isCompositeFlag(),p.isFoodFlag(),p.getProductStatus(),p.getPermitPeriod(),
+				p.getComp1(),p.getComp2(),p.getComp3(),p.getComp4(),p.getComp5(),
+				p.getComp6(),p.getComp7(),p.getComp8(),p.getComp9(),p.getComp10());
 		model.addAttribute("registProductForm",form);
 		// configuration view
 		model.addAttribute("contents","master/productDetail :: productDetail_contents");
@@ -206,7 +207,7 @@ public class ProductMasterController {
 		model.addAttribute("radioProductStatus",radioProductStatus);
 		// execution
 		Product p = new Product(form.getProductId(),form.getProductCd(),form.getProductName(),
-				form.isCompositeFlag(),form.isFoodFlag(),form.getProductStatus(),
+				form.isCompositeFlag(),form.isFoodFlag(),form.getProductStatus(),form.getPermitPeriod(),
 				form.getComp1(),form.getComp2(),form.getComp3(),
 				form.getComp4(),form.getComp5(),form.getComp6(),
 				form.getComp7(),form.getComp8(),form.getComp9(),form.getComp10());
