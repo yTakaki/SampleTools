@@ -5,7 +5,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <meta charset="UTF-8">
 </head>
 <body>
-	<div th:fragment="datelogSearch_contents">
+	<div th:fragment="datelogSearchProduct_contents">
 		<div class="page-header">
 			<h1>履歴検索画面＜商品用＞</h1>
 			<form method="post" th:action="@{/datelogSearch}" th:object="${datelogSearchForm}">
@@ -47,9 +47,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 				<div class="form-group row small">
 					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成品ID</label>
 					<div class="col-sm-10 row">
-						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{compId}"
-						th:text="${compResult}">
-						<p class="form-control-sm">(完全一致検索)　</p>
+						<input type="text" class="col-sm-2 form-control form-control-sm" th:field="*{compId}">
+						<p class="form-control-sm">　</p>
 						<a class="btn btn-primary btn-sm form-control-sm" th:href="@{/searchProduct/Comp}">商品ID検索</a>
 					</div>
 				</div>

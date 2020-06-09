@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div th:fragment="datelogRegistProduct_contents">
+		<div class="page-header">
+			<h1>賞味期限登録：セットアップ品</h1>
+			<a class="float-right" th:href="@{/datelog}">ホーム：賞味期限管理</a>
+			<br>
+			<form method="post" th:action="@{/productReference}">
+			<!-- th:object="${productReferenceForm}" -->
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">作業日</label>
+					<div class="col-sm-3">
+						<input type="date" class="form-control form-control-sm">
+						<!-- th:field="*{workingDate}" th:value="*{workingDate}" -->
+					</div>
+					<label class="col-sm-1 col-form-label col-form-label-sm text-right">出荷日</label>
+					<div class="col-sm-3">
+						<input type="date" class="form-control form-control-sm">
+						<!--  th:field="*{shipmentDate}" th:valule="*{shipmentDate}" -->
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">商品ID</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control form-control-sm">
+						<!-- th:field="*{productId}" -->
+					</div>
+					<label class="col-sm-1 col-form-label col-form-label-sm text-right">数量</label>
+					<div class="col-sm-3">
+						<input type="number" class="form-control form-control-sm" value="1">
+						<!--  th:field="*{workQuantity}" -->
+					</div>
+				</div>
+				<div class="container">
+					<label class="col-sm-1 col-form-label col-form-label-sm text-right"></label>
+					<button class="btn btn-primary btn-sm" type="submit">抽　出</button>
+					<a class="btn btn-secondary btn-sm" th:href="@{/datelogRegistProduct}">クリア</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
