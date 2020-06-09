@@ -6,43 +6,100 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 </head>
 <body>
 	<div th:fragment="datelogRegistProduct_contents">
-		<div class="page-header">
+		<header>
 			<h1>賞味期限登録：セットアップ品</h1>
 			<a class="float-right" th:href="@{/datelog}">ホーム：賞味期限管理</a>
 			<br>
-			<form method="post" th:action="@{/productReference}">
-			<!-- th:object="${productReferenceForm}" -->
+			<form method="post" th:action="@{/productReference}" th:object="${productReferenceForm}">
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label col-form-label-sm text-right">作業日</label>
-					<div class="col-sm-3">
-						<input type="date" class="form-control form-control-sm">
-						<!-- th:field="*{workingDate}" th:value="*{workingDate}" -->
+					<div class="col-sm-2">
+						<input type="text" class="form-control form-control-sm" placeholder="yyyyMMdd"
+						 th:field="*{workingDate}">
 					</div>
 					<label class="col-sm-1 col-form-label col-form-label-sm text-right">出荷日</label>
-					<div class="col-sm-3">
-						<input type="date" class="form-control form-control-sm">
-						<!--  th:field="*{shipmentDate}" th:valule="*{shipmentDate}" -->
+					<div class="col-sm-2">
+						<input type="text" class="form-control form-control-sm" placeholder="yyyyMMdd"
+						 th:field="*{shipmentDate}">
 					</div>
 				</div>
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label col-form-label-sm text-right">商品ID</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control form-control-sm">
-						<!-- th:field="*{productId}" -->
+					<div class="col-sm-2">
+						<input type="text" class="form-control form-control-sm" th:field="*{productId}">
 					</div>
-					<label class="col-sm-1 col-form-label col-form-label-sm text-right">数量</label>
-					<div class="col-sm-3">
-						<input type="number" class="form-control form-control-sm" value="1">
-						<!--  th:field="*{workQuantity}" -->
+					<label class="col-sm-1 col-form-label col-form-label-sm text-right">作業数量</label>
+					<div class="col-sm-2">
+						<input type="number" class="form-control form-control-sm" value="1" th:field="*{workQuantity}">
 					</div>
-				</div>
-				<div class="container">
 					<label class="col-sm-1 col-form-label col-form-label-sm text-right"></label>
 					<button class="btn btn-primary btn-sm" type="submit">抽　出</button>
+					<label class="col-form-label col-form-label-sm text-right">　</label>
 					<a class="btn btn-secondary btn-sm" th:href="@{/datelogRegistProduct}">クリア</a>
 				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">商品コード</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control form-control-sm" th:field="*{productCd}"
+						readonly="readonly">
+					</div>
+					<label class="col-sm-1 col-form-label col-form-label-sm text-right">商品名</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control form-control-sm" th:field="*{productName}"
+						readonly="readonly">
+					</div>
+				</div>
 			</form>
+			<label class="text-info" th:text="${result}">結果表示</label>
+		</header>
+		<div class="containar-fluid">
+			<p>＜構成品一覧＞</p>
+			<div class="row">
+			<form method="post" th:action="@{/calcCompDate}" th:object="${compList}">
+				<table class="table table-hover table-striped">
+				<tr>
+					<th>構成品ID</th>
+					<th>商品コード</th>
+					<th>商品名</th>
+					<th>食品フラグ</th>
+					<th>使用許可期限</th>
+					<th>賞味期限</th>
+				</tr>
+				<tr class="form-group" th:each="comp:${compList}">
+					<td th:text="${comp.productId}"></td>
+					<td th:text="${comp.productCd}"></td>
+					<td th:text="${comp.productName}"></td>
+					<td th:text="${comp.foodFlag}?'食品':'食品以外'"></td>
+					<td th:text="${comp.permitDate}"></td>
+					<td>
+						<input type="text" class="form-control form-control-sm" placeholder="yyyyMMdd"
+						th:value="${comp.compDate}" th:readonly="${comp.foodFlag}?false:readonly">
+					</td>
+				</tr>
+				</table>
+				<button class="btn btn-primary btn-md float-right" type="submit">計算実行</button>
+			</form>
+			</div>
+			<label class="text-info" th:text="${result}">結果表示</label>
 		</div>
+		<footer>
+			<p></p>
+			<form method="post" th:action="@{/registDatelog}" th:object="${productDatelogForm}">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">使用許可期限</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control form-control-sm"
+							th:field="*{permitDate}" readonly="readonly">
+						</div>
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">賞味期限</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control form-control-sm" th:field="*{productDatelog}"
+							placeholder="yyyyMMdd">
+						</div>
+					<button class="btn btn-success btn-md" type="submit">登　録</button>
+				</div>
+			</form>
+		</footer>
 	</div>
 </body>
 </html>
