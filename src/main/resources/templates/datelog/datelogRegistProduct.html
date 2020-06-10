@@ -50,12 +50,12 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					</div>
 				</div>
 			</form>
-			<label class="text-info" th:text="${result}">結果表示</label>
+			<label class="text-danger" th:text="${searchResult}">結果表示</label>
 		</header>
-		<div class="containar-fluid">
-			<p>＜構成品一覧＞</p>
+		<div class="mx-auto" style="width:1000px;">
 			<div class="row">
 			<form method="post" th:action="@{/calcCompDate}" th:object="${compList}">
+				<p>＜構成品一覧＞</p>
 				<table class="table table-hover table-striped">
 				<tr>
 					<th>構成品ID</th>
@@ -77,28 +77,32 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					</td>
 				</tr>
 				</table>
-				<button class="btn btn-primary btn-md float-right" type="submit">計算実行</button>
+				<button class="btn btn-success btn-sm float-right" type="submit">計算実行</button>
 			</form>
 			</div>
-			<label class="text-info" th:text="${result}">結果表示</label>
+			<label class="text-info" th:text="${calcResult}">結果表示</label>
 		</div>
 		<footer>
-			<p></p>
 			<form method="post" th:action="@{/registDatelog}" th:object="${productDatelogForm}">
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label col-form-label-sm text-right">使用許可期限</label>
-						<div class="col-sm-2">
-							<input type="text" class="form-control form-control-sm"
-							th:field="*{permitDate}" readonly="readonly">
-						</div>
-					<label class="col-sm-2 col-form-label col-form-label-sm text-right">賞味期限</label>
-						<div class="col-sm-2">
-							<input type="text" class="form-control form-control-sm" th:field="*{productDatelog}"
-							placeholder="yyyyMMdd">
-						</div>
-					<button class="btn btn-success btn-md" type="submit">登　録</button>
+					<label class="col-sm-2 col-form-label col-form-label-sm text-right">食品フラグ</label>
+					<div class="col-sm-1">
+						<p th:text="*{foodFlag}?'食品':'食品以外'"></p>
+					</div>
+					<label class="col-form-label col-form-label-sm text-right">使用許可期限</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control form-control-sm" th:field="*{permitDate}"
+						readonly="readonly">
+					</div>
+					<label class="col-sm-1 col-form-label col-form-label-sm text-right">賞味期限</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control form-control-sm" th:field="*{productDatelog}"
+						placeholder="yyyyMMdd" th:readonly="((*{foodFlag}) and (*{compositeFlag}==false))?false:readonly">
+					</div>
+					<button class="btn btn-primary btn-md" type="submit">登　録</button>
 				</div>
 			</form>
+			<label class="text-info" th:text="${registResult}">結果表示</label>
 		</footer>
 	</div>
 </body>

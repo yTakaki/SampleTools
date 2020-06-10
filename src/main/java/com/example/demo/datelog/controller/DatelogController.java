@@ -1,7 +1,5 @@
 package com.example.demo.datelog.controller;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +31,14 @@ public class DatelogController {
 		return "login/homeLayout";
 	}
 
-	// セットアップ品用日付登録画面へのリクエスト
+	// 日付登録画面へのリクエスト
 	@GetMapping("/datelogRegistProduct")
 	public String getDatelogRegistProduct(@ModelAttribute ProductReferenceForm form,
 			@ModelAttribute ProductDatelogForm form2,Model model) {
 		// initialization
-		form.setWorkingDate(LocalDate.now());
-		form.setShipmentDate(LocalDate.now().plusDays(1));
-		form.setWorkQuantity(1);
+		//form.setWorkingDate(LocalDate.now());
+		//form.setShipmentDate(LocalDate.now().plusDays(1));
+		//form.setWorkQuantity(1);
 		// configuration view
 		model.addAttribute("contents","datelog/datelogRegistProduct :: datelogRegistProduct_contents");
 		return "login/homeLayout";
@@ -48,37 +46,54 @@ public class DatelogController {
 
 	// 日付登録画面の抽出ボタンを押す
 	@PostMapping("/productReference")
-	public String postProductReference(@ModelAttribute @Validated ProductReferenceForm form,
-			@ModelAttribute ProductDatelogForm form2,BindingResult bind,Model model) {
+	public String postProductReference(@ModelAttribute @Validated ProductReferenceForm form,BindingResult bind,
+			@ModelAttribute ProductDatelogForm form2,BindingResult bind2,Model model) {
 		if (bind.hasErrors()) {
+			getDatelogRegistProduct(form,form2,model);
+		}
+		if (bind2.hasErrors()) {
 			getDatelogRegistProduct(form,form2,model);
 		}
 		// execution
 		Product product = service.selectOneProduct(form.getProductId());
 		form.setProductCd(product.getProductCd());
 		form.setProductName(product.getProductName());
-		form2.setPermitDate(form.getShipmentDate().plusDays(product.getPermitPeriod()));
-		List<String> idList = service.selectCompIdList(form.getProductId());
-		List<CompDatelog> compList = new ArrayList<>();
-		for (String str:idList) {
-			Product p = service.selectOneProduct(str);
-			CompDatelog cp = new CompDatelog(p.getProductId(),p.getProductCd(),
-					p.getProductName(),p.isFoodFlag(),form.getShipmentDate().plusDays(p.getPermitPeriod()));
-			compList.add(cp);
+		form2.setCompositeFlag(product.isCompositeFlag());
+		form2.setFoodFlag(product.isFoodFlag());
+		if (product.isFoodFlag()==false) {
+			model.addAttribute("searchResult","入力した商品IDは食品ではありません。再度、商品IDを入力してください。");
 		}
+		form2.setPermitDate(form.getShipmentDate().plusDays(product.getPermitPeriod()));
+		List<CompDatelog> compList = service.selectCompList(form.getProductId(), form.getShipmentDate());
 		model.addAttribute("compList",compList);
 		// configuration view
 		model.addAttribute("contents","datelog/datelogRegistProduct :: datelogRegistProduct_contents");
 		return "login/homeLayout";
 	}
 
-	// 既製品用日付登録画面へのリクエスト
-	@GetMapping("/datelogRegistComp")
-	public String getDatelogRegistComp(Model model) {
+	// 日付登録画面の計算実行ボタンを押す
+	@PostMapping("/calcCompDate")
+	public String postCalcCompDate(@ModelAttribute @Validated ProductReferenceForm form,BindingResult bind,
+			@ModelAttribute ProductDatelogForm form2,BindingResult bind2,Model model) {
+		if (bind.hasErrors()) {
+			getDatelogRegistProduct(form,form2,model);
+		}
+		if (bind2.hasErrors()) {
+			getDatelogRegistProduct(form,form2,model);
+		}
+		System.out.println(form);
+		System.out.println(form2);
+		// execution
 
-		model.addAttribute("contents","datelog/datelogRegistComp :: datelogRegistComp_contents");
+		//System.out.println(compList);
+		// configuration view
+		model.addAttribute("contents","datelog/datelogRegistProduct :: datelogRegistProduct_contents");
 		return "login/homeLayout";
 	}
+
+	// 日付登録画面の登録ボタンを押す
+
+
 	// セットアップ品用履歴検索画面へのリクエスト
 	@GetMapping("/datelogSearchProduct")
 	public String getDatelogSearchProduct(Model model) {

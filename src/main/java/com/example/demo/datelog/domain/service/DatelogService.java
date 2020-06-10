@@ -1,15 +1,19 @@
 package com.example.demo.datelog.domain.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.datelog.domain.model.CompDatelog;
 import com.example.demo.master.domain.model.Product;
 import com.example.demo.master.domain.service.ProductService;
 
 @Service
+@Transactional
 public class DatelogService {
 
 	@Autowired
@@ -33,6 +37,18 @@ public class DatelogService {
 		if (p.getComp9().length()>0) { list.add(p.getComp9());}
 		if (p.getComp10().length()>0) { list.add(p.getComp10());}
 		return list;
+	}
+
+	public List<CompDatelog> selectCompList(String productId,LocalDate shipmentDate) {
+		List<String> list = selectCompIdList(productId);
+		List<CompDatelog> compList = new ArrayList<>();
+		for (String str:list) {
+			Product p = selectOneProduct(str);
+			CompDatelog cp = new CompDatelog(p.getProductId(),p.getProductCd(),
+					p.getProductName(),p.isFoodFlag(),shipmentDate.plusDays(p.getPermitPeriod()));
+			compList.add(cp);
+		}
+		return compList;
 	}
 
 }

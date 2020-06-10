@@ -7,17 +7,19 @@ import lombok.Data;
 @Data
 public class CompDatelog {
 
-	private String productId;
+	private String productId; // 構成品の商品ID
 
-	private String productCd;
+	private String productCd; // 構成品の商品コード
 
-	private String productName;
+	private String productName; // 構成品の商品名
 
-	private boolean foodFlag;
+	private boolean foodFlag; // 構成品の食品フラグ
 
-	private LocalDate permitDate;
+	private LocalDate permitDate; // 構成品の使用許可期限
 
-	private LocalDate compDate;
+	private LocalDate compDate; // 構成品の賞味期限
+
+	private int productDatelogId; // セットアップ品のログID
 
 	public CompDatelog() {
 	}
