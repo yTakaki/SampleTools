@@ -12,8 +12,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import com.example.demo.login.domain.model.LoginUser;
-import com.example.demo.login.domain.repository.LoginUserMapper;
+import com.example.demo.login.model.LoginUser;
+import com.example.demo.login.repository.LoginUserMapper;
+import com.example.demo.login.service.LoginUserService;
 
 @SpringJUnitConfig(classes = LoginUserServiceTest.Config.class)
 public class LoginUserServiceTest {

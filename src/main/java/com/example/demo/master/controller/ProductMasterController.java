@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.master.domain.model.Product;
-import com.example.demo.master.domain.model.ProductSearchForm;
-import com.example.demo.master.domain.model.RegistProductForm;
-import com.example.demo.master.domain.service.ProductService;
+import com.example.demo.master.model.Product;
+import com.example.demo.master.model.ProductSearchForm;
+import com.example.demo.master.model.RegistProductForm;
+import com.example.demo.master.service.ProductService;
 
 @Controller
 public class ProductMasterController {

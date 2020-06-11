@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.login.domain.model.LoginUser;
-import com.example.demo.login.domain.model.SignupForm;
-import com.example.demo.login.domain.service.LoginUserService;
+import com.example.demo.login.model.LoginUser;
+import com.example.demo.login.model.SignupForm;
+import com.example.demo.login.service.LoginUserService;
 
 @Controller
 public class LoginController {

@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.datelog.domain.model.CompDatelog;
-import com.example.demo.datelog.domain.model.ProductDatelogForm;
-import com.example.demo.datelog.domain.model.ProductReferenceForm;
-import com.example.demo.datelog.domain.service.DatelogService;
-import com.example.demo.master.domain.model.Product;
+import com.example.demo.datelog.model.CompDatelog;
+import com.example.demo.datelog.model.ProductDatelogForm;
+import com.example.demo.datelog.model.ProductReferenceForm;
+import com.example.demo.datelog.service.DatelogService;
+import com.example.demo.master.model.Product;
 
 @Controller
 public class DatelogController {

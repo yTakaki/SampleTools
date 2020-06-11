@@ -13,7 +13,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.TestPropertySource;
 
-import com.example.demo.login.domain.model.LoginUser;
+import com.example.demo.login.model.LoginUser;
+import com.example.demo.login.repository.LoginUserMapper;
 
 @MybatisTest
 @TestPropertySource(locations = "classpath:test.properties")

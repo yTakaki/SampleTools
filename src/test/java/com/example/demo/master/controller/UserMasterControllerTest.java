@@ -14,8 +14,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.login.domain.model.LoginUser;
-import com.example.demo.login.domain.service.LoginUserService;
+import com.example.demo.login.model.LoginUser;
+import com.example.demo.login.service.LoginUserService;
 import com.example.demo.master.controller.UserMasterController;
 
 @WebMvcTest(controllers = UserMasterController.class)

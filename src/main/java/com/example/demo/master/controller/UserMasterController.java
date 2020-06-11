@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.login.domain.model.LoginUser;
-import com.example.demo.login.domain.service.LoginUserService;
-import com.example.demo.master.domain.model.UpdateUserForm;
-import com.example.demo.master.domain.model.UserSearchForm;
+import com.example.demo.login.model.LoginUser;
+import com.example.demo.login.service.LoginUserService;
+import com.example.demo.master.model.UpdateUserForm;
+import com.example.demo.master.model.UserSearchForm;
 
 @Controller
 public class UserMasterController {
