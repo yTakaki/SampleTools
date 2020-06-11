@@ -8,7 +8,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<div th:fragment="productMaster_contents">
 		<div class="page-header">
 			<h1>商品検索画面</h1>
-			<form method="post" th:action="@{/productSearch}" th:object="${productSearchForm}">
+			<form method="get" th:action="@{/productSearch}" th:object="${productSearchForm}">
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label col-form-label-sm text-right">商品ID</label>
 					<div class="col-sm-2">
@@ -27,14 +27,14 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 				</div>
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成区分：</label>
-					<div th:each="flg:${radioCompositeFlag}" class="form-check-inline">
-						<input type="radio" name="radioCompositeFlag" th:text="${flg.key}"
-						 th:value="${flg.value}" th:field="*{compositeFlag}" class="form-check-input">
+					<div th:each="flg:${radioSetup}" class="form-check-inline">
+						<input type="radio" name="radioSetup" th:text="${flg.key}"
+						 th:value="${flg.value}" th:field="*{setup}" class="form-check-input">
 					</div>
 					<label class="col-sm-2 col-form-label col-form-label-sm text-right">食品フラグ：</label>
-					<div th:each="flg:${radioFoodFlag}" class="form-check-inline">
-						<input type="radio" name="radioFoodFlag" th:text="${flg.key}"
-						 th:value="${flg.value}" th:field="*{foodFlag}" class="form-check-input">
+					<div th:each="flg:${radioFood}" class="form-check-inline">
+						<input type="radio" name="radioFood" th:text="${flg.key}"
+						 th:value="${flg.value}" th:field="*{food}" class="form-check-input">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -54,10 +54,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					</div>
 				</div>
 				<div class="container">
-					<button class="btn btn-primary btn-sm" type="submit" name="search">検　索</button>
-					<button class="btn btn-info btn-sm" type="submit" name="selectall">一　覧</button>
+					<button class="btn btn-primary btn-sm" type="submit">検　索</button>
+					<a class="btn btn-info btn-sm" th:href="@{/productSearchAll}">一　覧</a>
 					<a class="btn btn-secondary btn-sm" th:href="@{/productMaster}">クリア</a>
-					<a class="btn btn-success btn-sm" th:href="@{/registProduct}">新規登録</a>
+					<a class="btn btn-success btn-sm" th:href="@{/registerProduct}">新規登録</a>
 				</div>
 				<ul>
 					<li class="small" th:each="error:${#fields.detailedErrors()}">
@@ -86,8 +86,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					<td th:text="${product.productId}"></td>
 					<td th:text="${product.productCd}"></td>
 					<td th:text="${product.productName}"></td>
-					<td th:text="${product.compositeFlag}?'セットアップ品':'既製品'"></td>
-					<td th:text="${product.foodFlag}?'食品':'食品以外'"></td>
+					<td th:text="${product.setup}?'セットアップ品':'既製品'"></td>
+					<td th:text="${product.food}?'食品':'食品以外'"></td>
 					<td th:text="(${product.productStatus}==0)?'取扱い可能':
 					((${product.productStatus}==1)?'終売予定':'終了')"></td>
 					<td th:text="${product.permitPeriod}"></td>

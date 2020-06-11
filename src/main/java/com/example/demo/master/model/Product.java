@@ -11,9 +11,9 @@ public class Product {
 
 	private String productName;
 
-	private boolean compositeFlag;
+	private boolean isSetup;
 
-	private boolean foodFlag;
+	private boolean isFood;
 
 	private int productStatus;
 
@@ -42,25 +42,24 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(String id,String cd,String name,boolean flag1,boolean flag2,int status,int period,
-			String comp1,String comp2,String comp3,String comp4,String comp5,
-			String comp6,String comp7,String comp8,String comp9,String comp10) {
-		this.setProductId(id);
-		this.setProductCd(cd);
-		this.setProductName(name);
-		this.setCompositeFlag(flag1);
-		this.setFoodFlag(flag2);
-		this.setProductStatus(status);
-		this.setPermitPeriod(period);
-		this.setComp1(comp1);
-		this.setComp2(comp2);
-		this.setComp3(comp3);
-		this.setComp4(comp4);
-		this.setComp5(comp5);
-		this.setComp6(comp6);
-		this.setComp7(comp7);
-		this.setComp8(comp8);
-		this.setComp9(comp9);
-		this.setComp10(comp10);
+	public Product(RegisterProductForm f) {
+		this.productId = f.getProductId();
+		this.productCd = f.getProductCd();
+		this.productName = f.getProductName();
+		this.isSetup = f.isSetup();
+		this.isFood = f.isFood();
+		this.productStatus = f.getProductStatus();
+		this.permitPeriod = f.getPermitPeriod();
+		this.comp1 = f.getComp1();
+		this.comp2 = f.getComp2();
+		this.comp3 = f.getComp3();
+		this.comp4 = f.getComp4();
+		this.comp5 = f.getComp5();
+		this.comp6 = f.getComp6();
+		this.comp7 = f.getComp7();
+		this.comp8 = f.getComp8();
+		this.comp9 = f.getComp9();
+		this.comp10 = f.getComp10();
 	}
+
 }

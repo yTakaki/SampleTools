@@ -16,9 +16,9 @@ public class ProductSearchForm {
 	@NotNull
 	private String productName;
 
-	private boolean compositeFlag;
+	private boolean isSetup;
 
-	private boolean foodFlag;
+	private boolean isFood;
 
 	private int productStatus;
 

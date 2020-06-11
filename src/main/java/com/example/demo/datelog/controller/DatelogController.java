@@ -58,9 +58,9 @@ public class DatelogController {
 		Product product = service.selectOneProduct(form.getProductId());
 		form.setProductCd(product.getProductCd());
 		form.setProductName(product.getProductName());
-		form2.setCompositeFlag(product.isCompositeFlag());
-		form2.setFoodFlag(product.isFoodFlag());
-		if (product.isFoodFlag()==false) {
+		form2.setCompositeFlag(product.isSetup());
+		form2.setFoodFlag(product.isFood());
+		if (product.isFood()==false) {
 			model.addAttribute("searchResult","入力した商品IDは食品ではありません。再度、商品IDを入力してください。");
 		}
 		form2.setPermitDate(form.getShipmentDate().plusDays(product.getPermitPeriod()));

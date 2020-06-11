@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.master.model.Product;
+import com.example.demo.master.model.ProductSearchForm;
 import com.example.demo.master.repository.ProductMapper;
 
 @Service
@@ -34,8 +35,11 @@ public class ProductService {
 		return mapper.deleteProduct(productId);
 	}
 
-	public List<Product> searchProduct(String id,String cd,String name,
-			boolean flag1,boolean flag2,int status,String compId) {
-		return mapper.searchProduct(id, cd, name, flag1, flag2, status, compId);
+	public List<Product> searchProduct(ProductSearchForm form) {
+		List<Product> list = mapper.selectAllProduct();
+		// TODO:条件に基づいてListの中身を絞り込む処理を記述する
+
+		return list;
 	}
+
 }

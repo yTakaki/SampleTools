@@ -45,7 +45,7 @@ public class DatelogService {
 		for (String str:list) {
 			Product p = selectOneProduct(str);
 			CompDatelog cp = new CompDatelog(p.getProductId(),p.getProductCd(),
-					p.getProductName(),p.isFoodFlag(),shipmentDate.plusDays(p.getPermitPeriod()));
+					p.getProductName(),p.isFood(),shipmentDate.plusDays(p.getPermitPeriod()));
 			compList.add(cp);
 		}
 		return compList;

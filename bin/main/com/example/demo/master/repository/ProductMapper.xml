@@ -7,8 +7,8 @@
 		<id column="product_id" property="productId"></id>
 		<result column="product_cd" property="productCd"></result>
 		<result column="product_name" property="productName"></result>
-		<result column="composite_flag" property="compositeFlag"></result>
-		<result column="food_flag" property="foodFlag"></result>
+		<result column="setup" property="isSetup"></result>
+		<result column="food" property="isFood"></result>
 		<result column="product_status" property="productStatus"></result>
 		<result column="permit_period" property="permitPeriod"></result>
 		<result column="comp1" property="comp1"></result>
@@ -25,7 +25,7 @@
 
 	<insert id="insertProduct" parameterType="com.example.demo.master.model.Product">
 	INSERT INTO product
-	VALUES (#{productId},#{productCd},#{productName},#{compositeFlag},#{foodFlag},#{productStatus},#{permitPeriod},
+	VALUES (#{productId},#{productCd},#{productName},#{isSetup},#{isFood},#{productStatus},#{permitPeriod},
 	#{comp1},#{comp2},#{comp3},#{comp4},#{comp5},#{comp6},#{comp7},#{comp8},#{comp9},#{comp10})
 	</insert>
 
@@ -42,8 +42,8 @@
 
 	<update id="updateProduct" parameterType="com.example.demo.master.model.Product">
 	UPDATE product
-	SET product_cd = #{productCd}, product_name = #{productName},composite_flag = #{compositeFlag},
-	food_flag = #{foodFlag}, product_status = #{productStatus}, permit_period = #{permitPeriod},
+	SET product_cd = #{productCd}, product_name = #{productName},setup = #{isSetup},
+	food = #{isFood}, product_status = #{productStatus}, permit_period = #{permitPeriod},
 	comp1 = #{comp1}, comp2 = #{comp2}, comp3 = #{comp3}, comp4 = #{comp4},
 	comp5 = #{comp5}, comp6 = #{comp6}, comp7 = #{comp7}, comp8 = #{comp8},
 	comp9 = #{comp9}, comp10 = #{comp10}
@@ -54,28 +54,5 @@
 	DELETE FROM product
 	WHERE product_id = #{productId}
 	</delete>
-
-	<select id="searchProduct" resultMap="product">
-	SELECT *
-	FROM product
-	WHERE product_id LIKE CONCAT('%',#{id},'%')
-	AND product_cd LIKE CONCAT('%',#{cd},'%')
-	AND product_name LIKE CONCAT('%',#{name},'%')
-	AND composite_flag = #{flag1}
-	AND food_flag = #{flag2}
-	AND product_status = #{status}
-	AND (comp1 = #{compId}
-	OR comp2 = #{compId}
-	OR comp3 = #{compId}
-	OR comp4 = #{compId}
-	OR comp5 = #{compId}
-	OR comp6 = #{compId}
-	OR comp7 = #{compId}
-	OR comp8 = #{compId}
-	OR comp9 = #{compId}
-	OR comp10 = #{compId}
-	)
-
-	</select>
 
 </mapper>

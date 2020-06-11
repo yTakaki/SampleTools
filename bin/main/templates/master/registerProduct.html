@@ -5,12 +5,12 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <meta charset="UTF-8">
 </head>
 <body>
-	<div th:fragment="registProduct_contents" class="overflow-auto">
+	<div th:fragment="registerProduct_contents" class="overflow-auto">
 		<div class="page-header">
 			<h1>商品登録画面</h1>
 		</div>
 		<div class="col-sm-12">
-			<form th:action="@{/registProduct}" method="post" th:object="${registProductForm}">
+			<form th:action="@{/registerProduct}" method="post" th:object="${registerProductForm}">
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label col-form-label-sm text-right">商品ID</label>
 					<div class="col-sm-3" th:classappend="${#fields.hasErrors('productId')}?'has-error'">
@@ -47,16 +47,16 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 				</div>
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label col-form-label-sm text-right">構成区分</label>
-					<div th:each="flg:${radioCompositeFlag}" class="form-check-inline">
-						<input type="radio" name="radioCompositeFlag" th:text="${flg.key}"
-						 th:value="${flg.value}" th:field="*{compositeFlag}" class="form-check-input">
+					<div th:each="flg:${radioSetup}" class="form-check-inline">
+						<input type="radio" name="radioSetup" th:text="${flg.key}"
+						 th:value="${flg.value}" th:field="*{setup}" class="form-check-input">
 					</div>
 				</div>
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label col-form-label-sm text-right">食品フラグ</label>
-					<div th:each="flg:${radioFoodFlag}" class="form-check-inline">
-						<input type="radio" name="radioFoodFlag" th:text="${flg.key}"
-						 th:value="${flg.value}" th:field="*{foodFlag}" class="form-check-input">
+					<div th:each="flg:${radioFood}" class="form-check-inline">
+						<input type="radio" name="radioFood" th:text="${flg.key}"
+						 th:value="${flg.value}" th:field="*{food}" class="form-check-input">
 					</div>
 				</div>
 				<div class="form-group row">
